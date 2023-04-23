@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.AuthCredential
 
-import com.kubyapp.agrokuby.data.AuthRepository
+import com.kubyapp.domain.repository.AuthRepository
 import com.kubyapp.agrokuby.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -25,6 +25,8 @@ class SignInViewModel @Inject constructor(
 
     val _googleState = mutableStateOf(GoogleSignInState())
     val googleState: State<GoogleSignInState> = _googleState
+
+    val currentUserExist = repository.currentUserExist()
 
     fun googleSignIn(credential: AuthCredential) = viewModelScope.launch {
         repository.googleSignIn(credential).collect { result ->

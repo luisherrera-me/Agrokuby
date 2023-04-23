@@ -71,6 +71,7 @@ fun SignInScreen(
     val state = viewModel.signInState.collectAsState(initial = null)
     val customFont = FontFamily(Font(R.font.poppinsmedium))
     var showPassword by remember { mutableStateOf(false) }
+    val isUserExist = viewModel.currentUserExist.collectAsState(initial = true)
     /*Image(
         painter = painterResource(id = R.drawable.lg_fondo),
         contentDescription = "Imagen",
@@ -81,6 +82,15 @@ fun SignInScreen(
 
     )*/
 
+
+    LaunchedEffect(key1 = Unit) {
+        if (isUserExist.value) {
+            navController.popBackStack()
+            navController.navigate(
+                Screens.HomeScreen.route
+            )
+        }
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
