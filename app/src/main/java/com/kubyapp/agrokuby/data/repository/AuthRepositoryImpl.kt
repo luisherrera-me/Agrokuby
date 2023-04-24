@@ -67,23 +67,4 @@ class AuthRepositoryImpl @Inject constructor(
             println(it.message.toString())
         }
     }
-
-
-    private val lightnessRef = Firebase.firestore
-        .collection("sensors")
-        .document("brightness")
-        .collection("liveLux")
-
-    override suspend fun getLightness(): Resource<List<LightNess>> {
-        val result: List<LightNess>
-        return try {
-            result = lightnessRef.get().await().map {
-                it.toObject(LightNess::class.java)
-            }
-            Log.d("Repository", "Lightness query result: ${result.size}")
-            Resource.Success(result)
-        } catch (e: FirebaseFirestoreException) {
-            Resource.Error(e.message.toString())
-        }
-    }
 }

@@ -1,41 +1,55 @@
 package com.kubyapp.agrokuby.presentation.home_screen
 
+import android.annotation.SuppressLint
 import android.util.Log
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.kubyapp.agrokuby.presentation.home_screen.components.BrightnessDataHolder
+import com.kubyapp.agrokuby.presentation.lightness_screen.LightnessDataHolder
+import com.kubyapp.agrokuby.presentation.home_screen.components.TempDataHolder
+import com.kubyapp.agrokuby.presentation.lightness_screen.LightnessViewModel
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel = hiltViewModel()
+    viewModel: HomeViewModel = hiltViewModel(),
+    lightnessViewModel: LightnessViewModel = hiltViewModel()
+
 ) {
-    val lightness = viewModel.getLightness.collectAsState()
-    Log.d("TAG", "Lightness state: ${lightness.value.lightNess}")
+    val lightness by lightnessViewModel.getLightness.collectAsState()
+    val soil by viewModel.homeState.collectAsState()
+    Log.d("TAG", "HomeScreen: ${lightness.lightNess}")
+    Log.d("TAG", "HomeScreen: ${soil.soil}")
 
+    val scaffoldState = rememberScaffoldState()
 
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+    Scaffold(
+        topBar = {
+            TopAppBar(title = {
+                Text(text = "Agrokuby")
+            })
+        }
     ) {
-          LazyColumn{
-              items(lightness.value.lightNess!!){
-                  BrightnessDataHolder(lightNess = it )
-              }
-          }
-        
-
-
+        Column(modifier = Modifier.fillMaxSize()) {
+            LazyColumn(modifier = Modifier.fillMaxSize()) {
+                item {
+                    val lastIndex = lightness.lightNess?.lastOrNull()
+                    lastIndex?.let { LightnessDataHolder(lightNess = it) }
+                }
+                item {
+                    val lastIndex = soil.soil?.lastOrNull()
+                    lastIndex?.let { TempDataHolder(soil = it ) }
+                }
+            }
+        }
     }
-
 }

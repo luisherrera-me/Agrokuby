@@ -1,8 +1,8 @@
-package com.kubyapp.agrokuby.presentation.home_screen.components
+package com.kubyapp.agrokuby.presentation.lightness_screen
 
 import com.kubyapp.agrokuby.data.model.LightNess
 
-data class HomState(
+data class LightnessState(
     val lightNess: List<LightNess>? = emptyList(),
     val isLoading: Boolean = false,
     val isError: String = ""

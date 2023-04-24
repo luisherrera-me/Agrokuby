@@ -1,12 +1,10 @@
 package com.kubyapp.agrokuby.presentation.home_screen
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kubyapp.agrokuby.data.model.LightNess
-import com.kubyapp.agrokuby.presentation.home_screen.components.HomState
+import com.kubyapp.agrokuby.presentation.home_screen.components.HomeState
 import com.kubyapp.agrokuby.util.Resource
-import com.kubyapp.domain.repository.AuthRepository
+import com.kubyapp.domain.repository.SensorsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,34 +13,35 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val authRepository: AuthRepository
+    private val sensorsRepository: SensorsRepository
 ) : ViewModel() {
 
-    private val _getLightness: MutableStateFlow<HomState> = MutableStateFlow(HomState())
-    val getLightness: StateFlow<HomState> = _getLightness
+    private val _homeState: MutableStateFlow<HomeState> = MutableStateFlow(HomeState())
+    val homeState: StateFlow<HomeState> = _homeState
 
     init {
-        getAllCoffee()
+            getAllSoilQuality()
+
     }
 
-    private fun getAllCoffee() = viewModelScope.launch {
-        authRepository.getLightness().let { result ->
+
+    private fun getAllSoilQuality() = viewModelScope.launch {
+        sensorsRepository.getSoilQuality().let { result ->
             when (result) {
                 is Resource.Success -> {
-                    Log.d("results", "getAllCoffee: ${result.data}")
-                    _getLightness.value = HomState(lightNess = result.data)
+                    _homeState.value = HomeState(soil = result.data)
                 }
-
                 is Resource.Loading -> {
-                    _getLightness.value = HomState(isLoading = true)
+                    _homeState.value = HomeState(isLoading = true)
                 }
-
                 is Resource.Error -> {
-                    _getLightness.value = HomState(isError = result.message.toString())
+                    _homeState.value = HomeState(isError = result.message.toString())
                 }
             }
         }
     }
+
+
 
 
 }

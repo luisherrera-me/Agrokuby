@@ -28,17 +28,16 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kubyapp.agrokuby.R
-import com.kubyapp.agrokuby.data.model.LightNess
+import com.kubyapp.agrokuby.data.model.Soil
 import com.kubyapp.agrokuby.ui.theme.lightBlue
 
 
 @Composable
-fun BrightnessDataHolder(
-    lightNess: LightNess
+fun TempDataHolder(
+    soil: Soil
 ) {
     Surface(
         modifier = Modifier
@@ -69,7 +68,7 @@ fun BrightnessDataHolder(
                     contentAlignment = Alignment.Center
                 ) {
                     Image(
-                        imageVector = ImageVector.vectorResource(id = R.drawable.sun),
+                        imageVector = ImageVector.vectorResource(id = R.drawable.temp),
                         contentDescription = "Play Icon",
                         modifier = Modifier.size(30.dp)
                     )
@@ -77,7 +76,7 @@ fun BrightnessDataHolder(
                 Spacer(modifier = Modifier.width(16.dp))
                 Column {
                     Text(
-                        text = "Brightness",
+                        text = "Temperature",
                         style = TextStyle(
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Bold
@@ -122,7 +121,7 @@ fun BrightnessDataHolder(
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = "${lightNess.light}",
+                            text = "${soil.temp}",
                             style = TextStyle(
                                 fontSize = 14.sp,
                                 fontWeight = FontWeight.Normal
@@ -138,7 +137,4 @@ fun BrightnessDataHolder(
 
 
 }
-
-
-
 

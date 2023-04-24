@@ -14,7 +14,7 @@ interface AuthRepository {
 
     fun logout()
 
-    suspend fun getLightness(): Resource<List<LightNess>>
+
 
     fun googleSignIn(credential: AuthCredential): Flow<Resource<AuthResult>>
 }
