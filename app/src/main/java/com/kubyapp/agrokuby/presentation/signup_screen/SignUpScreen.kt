@@ -42,6 +42,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -99,6 +100,7 @@ fun SignUpScreen(
     Image(
         painter = painterResource(id = R.drawable.fondo),
         contentDescription = "Imagen",
+        modifier = Modifier.alpha(0.1f),
         contentScale = ContentScale.Crop
     )
 
@@ -285,7 +287,7 @@ fun SignUpScreen(
 
             }) {
                 Icon(
-                    modifier = Modifier.size(52.dp),
+                    modifier = Modifier.size(50.dp),
                     painter = painterResource(id = R.drawable.ic_facebook),
                     contentDescription = "Google Icon", tint = Color.Unspecified
                 )
@@ -314,6 +316,7 @@ fun SignUpScreen(
             if (state.value?.isSuccess?.isNotEmpty() == true) {
                 val success = state.value?.isSuccess
                 Toast.makeText(context, "$success", Toast.LENGTH_LONG).show()
+                navController.navigate(Screens.SignInScreen.route)
             }
         }
     }
@@ -321,6 +324,7 @@ fun SignUpScreen(
         scope.launch {
             if (googleSignInState.success != null) {
                 Toast.makeText(context, "Sign In Success", Toast.LENGTH_LONG).show()
+                navController.navigate(Screens.SignInScreen.route)
             }
         }
     }

@@ -28,12 +28,13 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kubyapp.agrokuby.R
 import com.kubyapp.agrokuby.data.model.LightNess
+import com.kubyapp.agrokuby.ui.theme.SunOrange
 import com.kubyapp.agrokuby.ui.theme.lightBlue
-
 
 @Composable
 fun LightnessDataHolder(
@@ -43,8 +44,9 @@ fun LightnessDataHolder(
         modifier = Modifier
             .fillMaxWidth()
             .height(100.dp)
+            .padding(horizontal = 20.dp)
             .padding(vertical = 6.dp)
-            .clip(RoundedCornerShape(8.dp))
+            .clip(RoundedCornerShape(15.dp))
             .background(MaterialTheme.colors.background),
         elevation = 4.dp
     ) {
@@ -64,13 +66,13 @@ fun LightnessDataHolder(
                         .clickable(onClick = {
 
                         })
-                        .background(lightBlue, CircleShape),
+                        .background(color = SunOrange, CircleShape),
                     contentAlignment = Alignment.Center
                 ) {
                     Image(
                         imageVector = ImageVector.vectorResource(id = R.drawable.sun),
                         contentDescription = "Play Icon",
-                        modifier = Modifier.size(30.dp)
+                        modifier = Modifier.size(40.dp)
                     )
                 }
                 Spacer(modifier = Modifier.width(16.dp))
@@ -113,6 +115,7 @@ fun LightnessDataHolder(
                     Box(
                         modifier = Modifier
                             .width(72.dp)
+                            .size(width = 70.dp, height = 25.dp)
                             .clickable(onClick = {
 
                             })
@@ -121,6 +124,7 @@ fun LightnessDataHolder(
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
+                            fontWeight = FontWeight.Bold,
                             text = "${lightNess.light}",
                             style = TextStyle(
                                 fontSize = 14.sp,
@@ -134,8 +138,6 @@ fun LightnessDataHolder(
             }
         }
     }
-
-
 }
 
 

@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kubyapp.agrokuby.R
 import com.kubyapp.agrokuby.data.model.Soil
+import com.kubyapp.agrokuby.ui.theme.TempPulple
 import com.kubyapp.agrokuby.ui.theme.lightBlue
 
 
@@ -43,8 +44,9 @@ fun TempDataHolder(
         modifier = Modifier
             .fillMaxWidth()
             .height(100.dp)
+            .padding(horizontal = 20.dp)
             .padding(vertical = 6.dp)
-            .clip(RoundedCornerShape(8.dp))
+            .clip(RoundedCornerShape(15.dp))
             .background(MaterialTheme.colors.background),
         elevation = 4.dp
     ) {
@@ -61,16 +63,17 @@ fun TempDataHolder(
                 Box(
                     modifier = Modifier
                         .size(52.dp)
+                        .size(width = 70.dp, height = 25.dp)
                         .clickable(onClick = {
 
                         })
-                        .background(lightBlue, CircleShape),
+                        .background(TempPulple, CircleShape),
                     contentAlignment = Alignment.Center
                 ) {
                     Image(
                         imageVector = ImageVector.vectorResource(id = R.drawable.temp),
                         contentDescription = "Play Icon",
-                        modifier = Modifier.size(30.dp)
+                        modifier = Modifier.size(40.dp)
                     )
                 }
                 Spacer(modifier = Modifier.width(16.dp))
@@ -85,6 +88,7 @@ fun TempDataHolder(
                         overflow = TextOverflow.Ellipsis
                     )
                     Text(
+                        fontWeight = FontWeight.Medium,
                         text = "Second Text",
                         style = TextStyle(
                             fontSize = 14.sp,
@@ -113,6 +117,7 @@ fun TempDataHolder(
                     Box(
                         modifier = Modifier
                             .width(72.dp)
+                            .size(width = 70.dp, height = 25.dp)
                             .clickable(onClick = {
 
                             })
@@ -121,6 +126,7 @@ fun TempDataHolder(
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
+                            fontWeight = FontWeight.Bold,
                             text = "${soil.temp}",
                             style = TextStyle(
                                 fontSize = 14.sp,
@@ -132,6 +138,8 @@ fun TempDataHolder(
                     }
                 }
             }
+
+
         }
     }
 

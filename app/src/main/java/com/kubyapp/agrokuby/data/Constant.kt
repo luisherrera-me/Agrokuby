@@ -1,7 +1,7 @@
 package com.kubyapp.agrokuby.data
 
 object Constant {
-    const val ServerClient ="648762583305-78125nu7qs9di8i8ap79rm2mv5bnmtaf.apps.googleusercontent.com"
+    const val ServerClient ="648762583305-ds52s14i3lmpupdfu1accnngt3gb42ag.apps.googleusercontent.com"
 
     /*
     ----------

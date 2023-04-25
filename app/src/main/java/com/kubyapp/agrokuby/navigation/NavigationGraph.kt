@@ -8,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import com.kubyapp.agrokuby.presentation.home_screen.HomeScreen
 import com.kubyapp.agrokuby.presentation.login_screen.SignInScreen
 import com.kubyapp.agrokuby.presentation.signup_screen.SignUpScreen
+import com.kubyapp.agrokuby.presentation.Splash_Screen.AnimatedSplashScreen
 
 @Composable
 fun NavigationGraph(
@@ -15,7 +16,7 @@ fun NavigationGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Screens.SignInScreen.route
+        startDestination = Screens.SplashScreen.route
     ) {
         composable(route = Screens.SignInScreen.route) {
             SignInScreen(navController)
@@ -25,6 +26,9 @@ fun NavigationGraph(
         }
         composable(route = Screens.HomeScreen.route){
             HomeScreen()
+        }
+        composable(route = Screens.SplashScreen.route){
+            AnimatedSplashScreen(navController = navController)
         }
     }
 

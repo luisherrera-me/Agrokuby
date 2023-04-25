@@ -1,6 +1,6 @@
 package com.kubyapp.agrokuby.presentation.home_screen.components
 
-import com.kubyapp.agrokuby.data.model.LightNess
+
 import com.kubyapp.agrokuby.data.model.Soil
 
 data class HomeState(
