@@ -89,7 +89,7 @@ fun TempDataHolder(
                     )
                     Text(
                         fontWeight = FontWeight.Medium,
-                        text = "Second Text",
+                        text = "${soil.user}",
                         style = TextStyle(
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Normal

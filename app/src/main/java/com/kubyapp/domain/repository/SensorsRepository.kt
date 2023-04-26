@@ -7,6 +7,5 @@ import com.kubyapp.agrokuby.util.Resource
 interface SensorsRepository {
 
     suspend fun getLightness(): Resource<List<LightNess>>
-
     suspend fun getSoilQuality(): Resource<List<Soil>>
 }

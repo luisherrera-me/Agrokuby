@@ -25,8 +25,9 @@ import androidx.compose.material.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.kubyapp.agrokuby.presentation.home_screen.components.StatusRobot
 import com.kubyapp.agrokuby.ui.theme.backgroundColor
-import com.kubyapp.agrokuby.ui.theme.lightBlue
+
 
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -36,10 +37,11 @@ fun HomeScreen(
     lightnessViewModel: LightnessViewModel = hiltViewModel()
 ) {
     val lightness by lightnessViewModel.getLightness.collectAsState()
+    val batterry by viewModel.getRobotStatus.collectAsState()
     val soil by viewModel.homeState.collectAsState()
     Log.d("TAG", "HomeScreen: ${lightness.lightNess}")
     Log.d("TAG", "HomeScreen: ${soil.soil}")
-
+    Log.d("TAG", "HomeScreen: ${batterry.BatterryRobot}")
     val scaffoldState = rememberScaffoldState()
 
     Scaffold(
@@ -68,6 +70,10 @@ fun HomeScreen(
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
             LazyColumn(modifier = Modifier.fillMaxSize()) {
+                item {
+                    val lastIndex = batterry.BatterryRobot?.lastOrNull()
+                    lastIndex?.let { StatusRobot(battery = it) }
+                }
                 item {
                     val lastIndex = lightness.lightNess?.lastOrNull()
                     lastIndex?.let { LightnessDataHolder(lightNess = it) }
