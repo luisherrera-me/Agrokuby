@@ -18,17 +18,22 @@ class RobotRepositoryImpl @Inject constructor(
         .collection("Robots")
         .document("17807108")
         .collection("Battery")
-    override suspend fun getBatery(): Resource<List<BatterryRobot>>{
-        val result: List<BatterryRobot>
+        .document("Data")
+
+    override suspend fun getBatery(): Resource<List<BatterryRobot>> {
         return try {
-            result = batterryStatus.get().await().map {
-                it.toObject(BatterryRobot::class.java)
+            val documentSnapshot = batterryStatus.get().await()
+            val batterryRobot = documentSnapshot.toObject(BatterryRobot::class.java)
+            Log.d("Repository", "BatterryRobot data: $batterryRobot")
+            if (batterryRobot != null) {
+                Resource.Success(listOf(batterryRobot))
+            } else {
+                Resource.Error("BatterryRobot data not found")
             }
-            Log.d("Repository", "Lightness query result: ${result.size}")
-            Resource.Success(result)
-        }catch (e: FirebaseFirestoreException){
+        } catch (e: FirebaseFirestoreException) {
             Resource.Error(e.message.toString())
         }
     }
+
 
 }

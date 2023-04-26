@@ -32,7 +32,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kubyapp.agrokuby.R
 import com.kubyapp.agrokuby.data.model.RobotStatus.BatterryRobot
-import com.kubyapp.agrokuby.data.model.Soil
 import com.kubyapp.agrokuby.ui.theme.TempPulple
 import com.kubyapp.agrokuby.ui.theme.lightBlue
 
