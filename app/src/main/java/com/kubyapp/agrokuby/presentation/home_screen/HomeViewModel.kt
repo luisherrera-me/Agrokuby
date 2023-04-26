@@ -29,7 +29,7 @@ class HomeViewModel @Inject constructor(
 
     init {
             getAllSoilQuality()
-        getStatusRobot()
+            getStatusRobot()//inicializacion
 
     }
 

@@ -28,6 +28,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kubyapp.agrokuby.R
@@ -35,7 +36,6 @@ import com.kubyapp.agrokuby.data.model.Soil
 import com.kubyapp.agrokuby.ui.theme.Purple200
 import com.kubyapp.agrokuby.ui.theme.blue
 import com.kubyapp.agrokuby.ui.theme.lightBlue
-
 
 @Composable
 fun MositureDataHolder(
@@ -47,7 +47,7 @@ fun MositureDataHolder(
             .height(100.dp)
             .padding(horizontal = 20.dp)
             .padding(vertical = 6.dp)
-            .clip(RoundedCornerShape(8.dp))
+            .clip(RoundedCornerShape(15.dp))
             .background(MaterialTheme.colors.background),
         elevation = 4.dp
     ) {
@@ -125,7 +125,7 @@ fun MositureDataHolder(
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = "${soil.moisture}",
+                            text = "${soil.moisture} %",
                             style = TextStyle(
                                 fontSize = 14.sp,
                                 fontWeight = FontWeight.Bold
@@ -139,5 +139,10 @@ fun MositureDataHolder(
 
         }
     }
+}
+@Preview
+@Composable
+fun PreviewGreeting() {
+    //MositureDataHolder()
 }
 

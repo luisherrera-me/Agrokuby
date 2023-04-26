@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kubyapp.agrokuby.R
 import com.kubyapp.agrokuby.data.model.RobotStatus.BatterryRobot
+import com.kubyapp.agrokuby.ui.theme.BatteryFull
 import com.kubyapp.agrokuby.ui.theme.TempPulple
 import com.kubyapp.agrokuby.ui.theme.lightBlue
 
@@ -43,7 +44,7 @@ fun StatusRobot(
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .height(100.dp)
+            .height(200.dp)
             .padding(horizontal = 20.dp)
             .padding(vertical = 6.dp)
             .clip(RoundedCornerShape(15.dp))
@@ -67,19 +68,19 @@ fun StatusRobot(
                         .clickable(onClick = {
 
                         })
-                        .background(TempPulple, CircleShape),
+                        .background(BatteryFull, CircleShape),
                     contentAlignment = Alignment.Center
                 ) {
                     Image(
-                        imageVector = ImageVector.vectorResource(id = R.drawable.temp),
+                        imageVector = ImageVector.vectorResource(id = R.drawable.ic_battery_full),
                         contentDescription = "Play Icon",
-                        modifier = Modifier.size(40.dp)
+                        modifier = Modifier.size(35.dp)
                     )
                 }
                 Spacer(modifier = Modifier.width(16.dp))
                 Column {
                     Text(
-                        text = "Temperature",
+                        text = "Batterry",
                         style = TextStyle(
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Bold
@@ -89,7 +90,7 @@ fun StatusRobot(
                     )
                     Text(
                         fontWeight = FontWeight.Medium,
-                        text = "estado actual",
+                        text = "${battery.BatteryTime} minutes",
                         style = TextStyle(
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Normal
@@ -105,7 +106,7 @@ fun StatusRobot(
             ) {
                 Column {
                     Text(modifier = Modifier.align(Alignment.CenterHorizontally),
-                        text = "average",
+                        text = "Actual state",
                         style = TextStyle(
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Normal
@@ -127,7 +128,7 @@ fun StatusRobot(
                     ) {
                         Text(
                             fontWeight = FontWeight.Bold,
-                            text = "${battery.BatteryCapacity}",
+                            text = "${battery.BatteryCapacity} %",
                             style = TextStyle(
                                 fontSize = 14.sp,
                                 fontWeight = FontWeight.Normal

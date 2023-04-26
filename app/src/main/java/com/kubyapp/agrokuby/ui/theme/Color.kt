@@ -1,5 +1,6 @@
 package com.kubyapp.agrokuby.ui.theme
 
+
 import androidx.compose.ui.graphics.Color
 
 val Purple200 = Color(0xFFB8F1B0)
@@ -13,3 +14,4 @@ val SunOrange = Color(0xfffa9c21)
 val TempPulple = Color(0xff9a4fff)
 val HumidityBlue = Color(0xff569ef8)
 val backgroundColor = Color(0xfff2f5f8)
+val BatteryFull = Color(0xff00FFAB)
