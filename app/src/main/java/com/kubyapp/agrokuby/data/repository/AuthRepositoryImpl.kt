@@ -46,7 +46,7 @@ class AuthRepositoryImpl @Inject constructor(
 
     }
 
-    override fun registerUser(email: String, password: String): Flow<Resource<AuthResult>> {
+    /*override fun registerUser2(email: String, password: String, username: String): Flow<Resource<AuthResult>> {
         return flow {
             emit(Resource.Loading())
             val result = firebaseAuth.createUserWithEmailAndPassword(email, password).await()
@@ -56,6 +56,26 @@ class AuthRepositoryImpl @Inject constructor(
             println(it.message.toString())
         }
     }
+     */
+    override fun registerUser(email: String, password: String, username: String): Flow<Resource<AuthResult>> {
+        return flow {
+            emit(Resource.Loading())
+            val result = firebaseAuth.createUserWithEmailAndPassword(email, password).await()
+            val userId = result.user?.uid
+            val user = hashMapOf(
+                "username" to username
+                // Agrega otros campos que quieras guardar
+            )
+            val usersRef = fireStore.collection("users")
+            usersRef.document(userId!!).set(user).await()
+            emit(Resource.Success(result))
+        }.catch {
+            emit(Resource.Error(it.message.toString()))
+            println(it.message.toString())
+        }
+    }
+
+
 
     override fun googleSignIn(credential: AuthCredential): Flow<Resource<AuthResult>> {
         return flow {

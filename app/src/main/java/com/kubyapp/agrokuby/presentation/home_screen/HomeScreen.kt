@@ -111,19 +111,21 @@ fun HomeScreen(
                                 Box(
                                     modifier = Modifier
                                         .size(40.dp)
-                                        .background(Color.Blue, CircleShape)
+                                        .background(Color.Transparent, CircleShape)
                                 ) {
                                     Image(
-                                        painter = painterResource(id = R.drawable.user),
+                                        painter = painterResource(id = R.drawable.fotoperfil),
                                         contentDescription = "Logo",
                                         contentScale = ContentScale.Crop,
                                         modifier = Modifier
                                             .fillMaxSize()
+                                            /*
                                             .border(
                                                 BorderStroke(1.dp, Color.Gray),
                                                 CircleShape
                                             )
                                             .clip(CircleShape)
+                                             */
                                     )
                                 }
                             }
