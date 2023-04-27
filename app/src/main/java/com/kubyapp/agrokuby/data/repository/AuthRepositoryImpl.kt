@@ -45,7 +45,7 @@ class AuthRepositoryImpl @Inject constructor(
         }
 
     }
-
+    // Previous method for registering User with Email And Password
     /*override fun registerUser2(email: String, password: String, username: String): Flow<Resource<AuthResult>> {
         return flow {
             emit(Resource.Loading())
@@ -57,26 +57,33 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
      */
+
+
     override fun registerUser(email: String, password: String, username: String): Flow<Resource<AuthResult>> {
         return flow {
             emit(Resource.Loading())
             val result = firebaseAuth.createUserWithEmailAndPassword(email, password).await()
             val userId = result.user?.uid
-            val user = hashMapOf(
-                "username" to username
+            val GAuthentication = false
+            val userdata = hashMapOf(
+                "username" to username,
+                "photoUser" to "NO-PHOTO",
+                "GAutentica" to GAuthentication
                 // Agrega otros campos que quieras guardar
             )
-            val usersRef = fireStore.collection("users")
-            usersRef.document(userId!!).set(user).await()
+            if (userId != null) {
+                val userRef = fireStore.collection("users")
+                    .document(userId)
+                userRef.set(userdata).await()
+            }
             emit(Resource.Success(result))
         }.catch {
             emit(Resource.Error(it.message.toString()))
             println(it.message.toString())
         }
     }
-
-
-
+// previous method for registering  User whith Google
+/*
     override fun googleSignIn(credential: AuthCredential): Flow<Resource<AuthResult>> {
         return flow {
             emit(Resource.Loading())
@@ -87,4 +94,33 @@ class AuthRepositoryImpl @Inject constructor(
             println(it.message.toString())
         }
     }
+ */
+override fun googleSignIn(credential: AuthCredential): Flow<Resource<AuthResult>> {
+    return flow {
+        emit(Resource.Loading())
+        val result = firebaseAuth.signInWithCredential(credential).await()
+        val username = result.user // obtiene la información del Usuario
+        val name = username?.displayName
+        val photoUrl = username?.photoUrl
+        val GAuthentication = true
+        val userId = username?.uid
+
+        val userdata = hashMapOf(
+            "username" to username,
+            "photoUser" to photoUrl,
+            "GAutentica" to GAuthentication
+            // Agrega otros campos que quieras guardar
+        )
+
+        if (userId != null) {
+            val userRef = fireStore.collection("users")
+                .document(userId)
+            userRef.set(userdata).await()
+        }
+        emit(Resource.Success(result))
+    }.catch {
+        emit(Resource.Error(it.message.toString()))
+        println(it.message.toString())
+    }
+}
 }
