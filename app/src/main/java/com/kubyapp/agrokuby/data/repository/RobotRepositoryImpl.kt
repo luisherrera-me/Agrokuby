@@ -20,7 +20,7 @@ class RobotRepositoryImpl @Inject constructor(
         .collection("Battery")
         .document("Data")
 
-    override suspend fun getBatery(): Resource<List<BatterryRobot>> {
+    override suspend fun getBattery(): Resource<List<BatterryRobot>> {
         return try {
             val documentSnapshot = batterryStatus.get().await()
             val batterryRobot = documentSnapshot.toObject(BatterryRobot::class.java)

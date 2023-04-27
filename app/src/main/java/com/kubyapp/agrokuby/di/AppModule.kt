@@ -34,7 +34,6 @@ object AppModule {
     fun providesSensorRepositoryImpl(firebaseAuth: FirebaseAuth, firestore :FirebaseFirestore): SensorsRepository {
         return SensorsRepositoryImpl()
     }
-
     @Provides
     @Singleton
     fun providesFireStore() = Firebase.firestore

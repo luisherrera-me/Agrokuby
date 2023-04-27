@@ -2,39 +2,29 @@ package com.kubyapp.agrokuby.presentation.home_screen
 
 import android.annotation.SuppressLint
 import android.util.Log
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
-import com.kubyapp.agrokuby.R
-import com.kubyapp.agrokuby.presentation.home_screen.components.MositureDataHolder
-import com.kubyapp.agrokuby.presentation.lightness_screen.LightnessDataHolder
-import com.kubyapp.agrokuby.presentation.home_screen.components.TempDataHolder
-import com.kubyapp.agrokuby.presentation.lightness_screen.LightnessViewModel
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.*
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.kubyapp.agrokuby.R
+import com.kubyapp.agrokuby.presentation.home_screen.components.MositureDataHolder
 import com.kubyapp.agrokuby.presentation.home_screen.components.StatusRobot
+import com.kubyapp.agrokuby.presentation.home_screen.components.TempDataHolder
+import com.kubyapp.agrokuby.presentation.lightness_screen.LightnessDataHolder
+import com.kubyapp.agrokuby.presentation.lightness_screen.LightnessViewModel
+import com.kubyapp.agrokuby.presentation.temperature_screen.TemperatureViewModel
 import com.kubyapp.agrokuby.ui.theme.backgroundColor
 
 
@@ -42,13 +32,14 @@ import com.kubyapp.agrokuby.ui.theme.backgroundColor
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
+    temperatureViewModel: TemperatureViewModel = hiltViewModel(),
     lightnessViewModel: LightnessViewModel = hiltViewModel()
 ) {
     val lightness by lightnessViewModel.getLightness.collectAsState()
     val batterry by viewModel.getRobotStatus.collectAsState()
-    val soil by viewModel.homeState.collectAsState()
+    val soil by temperatureViewModel.getTemperatureState.collectAsState()
     Log.d("TAG", "HomeScreen: ${lightness.lightNess}")
-    Log.d("TAG", "HomeScreen: ${soil.soil}")
+    Log.d("TAG", "HomeScreen: ${soil.temperature}")
     Log.d("TAG", "HomeScreen: ${batterry.BatterryRobot}")
     val scaffoldState = rememberScaffoldState()
 
@@ -57,7 +48,6 @@ fun HomeScreen(
         topBar = {
             TopAppBar(
                 title = {
-
                     Row(
                         modifier = Modifier
                             .fillMaxSize()
@@ -83,8 +73,8 @@ fun HomeScreen(
                                             .size(35.dp)
                                             .aspectRatio(1f)
                                             .align(Alignment.Center)
-                                            //.fillMaxSize()
-                                            //.clip(CircleShape)
+                                        //.fillMaxSize()
+                                        //.clip(CircleShape)
                                     )
 
                                 }
@@ -119,13 +109,13 @@ fun HomeScreen(
                                         contentScale = ContentScale.Crop,
                                         modifier = Modifier
                                             .fillMaxSize()
-                                            /*
-                                            .border(
-                                                BorderStroke(1.dp, Color.Gray),
-                                                CircleShape
-                                            )
-                                            .clip(CircleShape)
-                                             */
+                                        /*
+                                        .border(
+                                            BorderStroke(1.dp, Color.Gray),
+                                            CircleShape
+                                        )
+                                        .clip(CircleShape)
+                                         */
                                     )
                                 }
                             }
@@ -139,6 +129,7 @@ fun HomeScreen(
             )
         }
     ) {
+
         Column(modifier = Modifier.fillMaxSize()) {
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 item {
@@ -150,14 +141,15 @@ fun HomeScreen(
                     lastIndex?.let { LightnessDataHolder(lightNess = it) }
                 }
                 item {
-                    val lastIndex = soil.soil?.lastOrNull()
-                    lastIndex?.let { TempDataHolder(soil = it ) }
+                    val lastIndex = soil.temperature?.lastOrNull()
+                    lastIndex?.let { TempDataHolder(soil = it) }
                 }
                 item {
-                    val lastIndex = soil.soil?.lastOrNull()
-                    lastIndex?.let { MositureDataHolder(soil = it ) }
+                    val lastIndex = soil.temperature?.lastOrNull()
+                    lastIndex?.let { MositureDataHolder(soil = it) }
                 }
             }
         }
+
     }
 }

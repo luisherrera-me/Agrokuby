@@ -10,6 +10,7 @@ import com.kubyapp.agrokuby.data.model.LightNess
 import com.kubyapp.agrokuby.data.model.Soil
 import com.kubyapp.agrokuby.util.Resource
 import com.kubyapp.domain.repository.SensorsRepository
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
@@ -27,7 +28,9 @@ class SensorsRepositoryImpl @Inject constructor(
             result = lightnessRef.get().await().map {
                 it.toObject(LightNess::class.java)
             }
+
             Log.d("Repository", "Lightness query result: ${result.size}")
+
             Resource.Success(result)
         } catch (e: FirebaseFirestoreException) {
             Resource.Error(e.message.toString())
