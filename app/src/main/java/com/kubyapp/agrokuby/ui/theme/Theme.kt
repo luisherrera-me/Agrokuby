@@ -12,6 +12,7 @@ private val DarkColorPalette = darkColors(
     secondary = Teal200,
     background = background
 )
+const val DEFAULT_PADDING = 40
 
 private val LightColorPalette = lightColors(
     primary = Purple500,
@@ -41,6 +42,15 @@ fun AgrokubyTheme(
 
     MaterialTheme(
         colors = colors,
+        typography = Typography,
+        shapes = Shapes,
+        content = content
+    )
+}
+@Composable
+fun FluidBottomNavigationTheme(content: @Composable () -> Unit) {
+    MaterialTheme(
+        colors = DarkColorPalette,
         typography = Typography,
         shapes = Shapes,
         content = content

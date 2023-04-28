@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 
 
 import com.google.firebase.auth.AuthCredential
-import com.kubyapp.domain.repository.AuthRepository
+import com.kubyapp.agrokuby.ui.theme.repository.AuthRepository
 import com.kubyapp.agrokuby.presentation.login_screen.GoogleSignInState
 import com.kubyapp.agrokuby.presentation.login_screen.SignInState
 import com.kubyapp.agrokuby.util.Resource

@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -23,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
@@ -49,6 +51,7 @@ fun StatusRobot(
             .padding(vertical = 6.dp)
             .clip(RoundedCornerShape(15.dp))
             .background(MaterialTheme.colors.background),
+
         elevation = 4.dp
     ) {
         Row(
@@ -59,24 +62,37 @@ fun StatusRobot(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Row(
+                modifier = Modifier
+                    .padding(horizontal = 10.dp),
+                horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.CenterVertically
-            ) {
-                Box(
-                    modifier = Modifier
-                        .size(52.dp)
-                        .size(width = 70.dp, height = 25.dp)
-                        .clickable(onClick = {
-
-                        })
-                        .background(BatteryFull, CircleShape),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Image(
-                        imageVector = ImageVector.vectorResource(id = R.drawable.ic_battery_full),
-                        contentDescription = "Play Icon",
-                        modifier = Modifier.size(35.dp)
+            )  {
+                IconButton(onClick = { /* acción */ }) {
+                    Box(
+                        modifier = Modifier
+                            .size(52.dp)
+                            .size(40.dp)
+                            .size(width = 70.dp, height = 25.dp)
+                            .background(BatteryFull, CircleShape),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Image(
+                            imageVector = when {
+                                battery.BatteryCharging -> ImageVector.vectorResource(id = R.drawable.ic_battery_charging)
+                                battery.BatteryCapacity >= 90 -> ImageVector.vectorResource(id = R.drawable.ic_battery_full)
+                                battery.BatteryCapacity >= 80 -> ImageVector.vectorResource(id = R.drawable.ic_battery_80)
+                                battery.BatteryCapacity >= 60 -> ImageVector.vectorResource(id = R.drawable.ic_battery_60)
+                                battery.BatteryCapacity >= 40 -> ImageVector.vectorResource(id = R.drawable.ic_battery_40)
+                                battery.BatteryCapacity >= 30 -> ImageVector.vectorResource(id = R.drawable.ic_battery_30)
+                                battery.BatteryCapacity >= 20 -> ImageVector.vectorResource(id = R.drawable.ic_battery_20)
+                                battery.BatteryCapacity >= 10 -> ImageVector.vectorResource(id = R.drawable.ic_battery_10)
+                                else -> ImageVector.vectorResource(id = R.drawable.ic_battery_empty)
+                                               },
+                            contentDescription = "Battery Icon",
+                            modifier = Modifier.size(35.dp)
                     )
                 }
+            }
                 Spacer(modifier = Modifier.width(16.dp))
                 Column {
                     Text(
@@ -105,8 +121,9 @@ fun StatusRobot(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Column {
-                    Text(modifier = Modifier.align(Alignment.CenterHorizontally),
-                        text = "Actual state",
+                    Text(
+                        modifier = Modifier.align(Alignment.CenterHorizontally),
+                        text = "average",
                         style = TextStyle(
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Normal
@@ -114,32 +131,30 @@ fun StatusRobot(
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
-                    Spacer(modifier = Modifier.height(5.dp))
-                    Box(
-                        modifier = Modifier
-                            .width(72.dp)
-                            .size(width = 70.dp, height = 25.dp)
-                            .clickable(onClick = {
 
-                            })
-                            .background(lightBlue, CircleShape)
-                            .align(Alignment.Start),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            fontWeight = FontWeight.Bold,
-                            text = "${battery.BatteryCapacity} %",
-                            style = TextStyle(
-                                fontSize = 14.sp,
-                                fontWeight = FontWeight.Normal
-                            ),
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
-                        )
+                    Spacer(modifier = Modifier.height(5.dp))
+                    IconButton(onClick = { /* acción */ }) {
+                        Box(
+                            modifier = Modifier
+                                .width(72.dp)
+                                .size(width = 70.dp, height = 25.dp)
+                                .background(lightBlue, CircleShape)
+                                .align(Alignment.Start),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "${battery.BatteryCapacity} %",
+                                style = TextStyle(
+                                    fontSize = 14.sp,
+                                    fontWeight = FontWeight.Bold
+                                ),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        }
                     }
                 }
             }
-
 
         }
     }

@@ -1,4 +1,4 @@
-package com.kubyapp.domain.repository
+package com.kubyapp.agrokuby.ui.theme.repository
 
 import com.kubyapp.agrokuby.data.model.LightNess
 import com.kubyapp.agrokuby.data.model.Soil

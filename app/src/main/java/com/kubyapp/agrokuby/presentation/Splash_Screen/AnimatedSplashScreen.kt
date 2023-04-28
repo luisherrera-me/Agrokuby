@@ -36,9 +36,9 @@ fun AnimatedSplashScreen(
     val isUserExist = viewModel.currentUserExist.collectAsState(initial = true)
     var startAnimation by remember { mutableStateOf(false) }
     val alphaAnim = animateFloatAsState(
-        targetValue = if (startAnimation) 1f else 0f,
+        targetValue = if (startAnimation) 5f else 5f,
         animationSpec = tween(
-            durationMillis = 300
+            durationMillis = 500
         )
     )
 

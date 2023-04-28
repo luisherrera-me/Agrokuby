@@ -10,7 +10,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.kubyapp.agrokuby.data.model.LightNess
-import com.kubyapp.domain.repository.AuthRepository
+import com.kubyapp.agrokuby.ui.theme.repository.AuthRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow

@@ -8,12 +8,12 @@ import com.google.rpc.context.AttributeContext
 import com.kubyapp.agrokuby.data.model.LightNess
 import com.kubyapp.agrokuby.util.Resource
 import com.kubyapp.agrokuby.data.model.RobotStatus.BatterryRobot
-import com.kubyapp.domain.repository.StatusRobot
+import com.kubyapp.agrokuby.ui.theme.repository.StatusRobot
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class RobotRepositoryImpl @Inject constructor(
-): StatusRobot{
+): StatusRobot {
     private val batterryStatus = Firebase.firestore
         .collection("Robots")
         .document("17807108")
