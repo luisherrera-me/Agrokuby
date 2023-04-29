@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -39,16 +40,15 @@ import com.kubyapp.agrokuby.ui.theme.lightBlue
 fun LightnessDataHolder(
     lightNess: LightNess
 ) {
-    Surface(
+    Card(
         modifier = Modifier
             .fillMaxWidth()
             .height(100.dp)
             .padding(horizontal = 20.dp)
-            .padding(vertical = 6.dp)
-            .clip(RoundedCornerShape(15.dp))
-            .background(MaterialTheme.colors.background),
-        elevation = 4.dp
-    ) {
+            .padding(vertical = 6.dp),
+        elevation = 5.dp,
+        shape = RoundedCornerShape(20.dp)
+    ){
         Row(
             modifier = Modifier
                 .fillMaxSize()
