@@ -32,8 +32,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kubyapp.agrokuby.R
-import com.kubyapp.agrokuby.data.model.Soil
-import com.kubyapp.agrokuby.ui.theme.Purple200
+import com.kubyapp.agrokuby.data.model.sensors.Soil
 import com.kubyapp.agrokuby.ui.theme.blue
 import com.kubyapp.agrokuby.ui.theme.lightBlue
 

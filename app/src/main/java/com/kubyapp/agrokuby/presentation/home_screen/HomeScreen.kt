@@ -23,6 +23,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.kubyapp.agrokuby.R
+import com.kubyapp.agrokuby.data.model.sensors.Barometric
+import com.kubyapp.agrokuby.presentation.home_screen.components.BarometricData.BarometricDataHolder
+import com.kubyapp.agrokuby.presentation.home_screen.components.BarometricData.BarometricViewModel
 import com.kubyapp.agrokuby.presentation.home_screen.components.MositureDataHolder
 import com.kubyapp.agrokuby.presentation.home_screen.components.StatusRobot
 import com.kubyapp.agrokuby.presentation.home_screen.components.TempDataHolder
@@ -38,11 +41,15 @@ import com.kubyapp.agrokuby.ui.theme.backgroundColor
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     temperatureViewModel: TemperatureViewModel = hiltViewModel(),
-    lightnessViewModel: LightnessViewModel = hiltViewModel()
+    lightnessViewModel: LightnessViewModel = hiltViewModel(),
+    barometricViewModel: BarometricViewModel = hiltViewModel()
 ) {
     val lightness by lightnessViewModel.getLightness.collectAsState()
     val batterry by viewModel.getRobotStatus.collectAsState()
     val soil by temperatureViewModel.getTemperatureState.collectAsState()
+    val barometric by barometricViewModel.getBarometricState.collectAsState()
+
+    Log.d("TAG","HomeScreen: ${barometric.Barometric}")
     Log.d("TAG", "HomeScreen: ${lightness.lightNess}")
     Log.d("TAG", "HomeScreen: ${soil.temperature}")
     Log.d("TAG", "HomeScreen: ${batterry.BatterryRobot}")
@@ -109,7 +116,8 @@ fun HomeScreen(
     ) {
 
         Column(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
                 .background(backgroundColor)
         ) {
             LazyColumn(modifier = Modifier.fillMaxSize()) {
@@ -129,6 +137,16 @@ fun HomeScreen(
                     val lastIndex = soil.temperature?.lastOrNull()
                     lastIndex?.let { MositureDataHolder(soil = it) }
                 }
+                item {
+                    val lastIndex = barometric.Barometric?.lastOrNull()
+                    lastIndex?.let { BarometricDataHolder(barometric = it) }
+                }
+                item {
+                    val lastIndex = soil.temperature?.lastOrNull()
+                    lastIndex?.let { MositureDataHolder(soil = it) }
+                    Spacer(modifier = Modifier.height(110.dp))
+                }
+
 
             }
         }

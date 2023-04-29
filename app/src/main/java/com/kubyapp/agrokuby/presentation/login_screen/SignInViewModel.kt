@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.AuthCredential
 
-import com.kubyapp.agrokuby.ui.theme.repository.AuthRepository
+import com.kubyapp.domain.repository.AuthRepository
 import com.kubyapp.agrokuby.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel

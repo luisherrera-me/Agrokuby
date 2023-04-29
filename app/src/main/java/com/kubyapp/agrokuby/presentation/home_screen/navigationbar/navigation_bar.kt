@@ -214,7 +214,7 @@ fun FabGroup(
         Modifier
             .fillMaxSize()
             .graphicsLayer { this.renderEffect = renderEffect }
-            .padding(bottom = DEFAULT_PADDING.dp),
+            .padding(bottom = 50.dp),
         contentAlignment = Alignment.BottomCenter
     ) {
 
