@@ -221,8 +221,10 @@ fun SignInScreen(
         }
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
             if (state.value?.isLoading == true) {
-                CircularProgressIndicator()
-            }
+                LaunchedEffect(key1 = state.value?.isError) {
+
+                }
+                }
 
         }
         Text(

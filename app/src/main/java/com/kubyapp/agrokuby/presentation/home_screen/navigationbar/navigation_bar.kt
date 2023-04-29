@@ -59,10 +59,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.kubyapp.agrokuby.R
+import com.kubyapp.agrokuby.ui.theme.BatteryFull
 import com.kubyapp.agrokuby.ui.theme.CircularMenu
 import com.kubyapp.agrokuby.ui.theme.DEFAULT_PADDING
 import com.kubyapp.agrokuby.ui.theme.FluidBottomNavigationTheme
 import com.kubyapp.agrokuby.ui.theme.Purple200
+import com.kubyapp.agrokuby.ui.theme.psycriatryColor
+import com.kubyapp.agrokuby.ui.theme.settingColor
 import kotlin.math.PI
 import kotlin.math.sin
 
@@ -186,12 +189,15 @@ fun CustomBottomNavigation() {
             )
             .padding(horizontal = 50.dp)
     ) {
-        listOf(R.drawable.ic_psychiatry_menu, R.drawable.ic_settings_menu).map { image ->
+        val images = listOf(R.drawable.ic_psychiatry_menu, R.drawable.ic_settings_menu)
+        val colors = listOf(psycriatryColor, settingColor)
+
+        images.mapIndexed { index, image ->
             IconButton(onClick = { }) {
                 Icon(
                     painter = painterResource(id = image),
                     contentDescription = null,
-                    tint = Purple200
+                    tint = colors[index]
                 )
             }
         }
@@ -251,7 +257,8 @@ fun FabGroup(
         )
 
         AnimatedFab(
-            icon = Icons.Default.Stream,
+            icon = Icons.Default.Add,
+
             modifier = Modifier
                 .rotate(
                     225 * FastOutSlowInEasing
@@ -268,7 +275,7 @@ fun AnimatedFab(
     modifier: Modifier,
     icon: ImageVector? = null,
     opacity: Float = 1f,
-    backgroundColor: Color = CircularMenu,
+    backgroundColor: Color = BatteryFull,
     onClick: () -> Unit = {}
 ) {
     FloatingActionButton(

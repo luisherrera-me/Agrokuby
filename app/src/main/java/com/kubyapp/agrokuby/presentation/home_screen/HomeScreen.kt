@@ -8,9 +8,14 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -19,14 +24,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.rememberLottieComposition
 import com.kubyapp.agrokuby.R
 import com.kubyapp.agrokuby.presentation.home_screen.components.MositureDataHolder
 import com.kubyapp.agrokuby.presentation.home_screen.components.StatusRobot
@@ -35,6 +47,7 @@ import com.kubyapp.agrokuby.presentation.home_screen.navigationbar.navigation_ba
 import com.kubyapp.agrokuby.presentation.lightness_screen.LightnessDataHolder
 import com.kubyapp.agrokuby.presentation.lightness_screen.LightnessViewModel
 import com.kubyapp.agrokuby.presentation.temperature_screen.TemperatureViewModel
+import com.kubyapp.agrokuby.ui.theme.BatteryFull
 import com.kubyapp.agrokuby.ui.theme.backgroundColor
 
 
@@ -57,82 +70,66 @@ fun HomeScreen(
         backgroundColor = Color.Transparent,
         topBar = {
             TopAppBar(
-                title = {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(horizontal =0.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Start
-                        ) {
-                            IconButton(onClick = { /* action */ }) {
-                                Box(
-                                    modifier = Modifier
-                                        .size(40.dp)
-                                        .background(Color.Transparent, CircleShape)
-                                ) {
-                                    Image(
-                                        painter = painterResource(id = R.drawable.ic_menu),
-                                        contentDescription = "Logo",
-                                        //contentScale = ContentScale.Crop,
-                                        modifier = Modifier
-                                            .size(35.dp)
-                                            .aspectRatio(1f)
-                                            .align(Alignment.Center)
-                                        //.fillMaxSize()
-                                        //.clip(CircleShape)
-                                    )
-
-                                }
-                            }
-                        }
-                        Row(
-                            horizontalArrangement = Arrangement.Center,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.lg_agrokuby),
-                                contentDescription = "Logo",
-                                modifier = Modifier.size(100.dp)
-                            )
-                            Text(text = "")
-                        }
-                        Row(
-                            modifier = Modifier
-                                .padding(horizontal = 10.dp),
-                            horizontalArrangement = Arrangement.End,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            IconButton(onClick = { /* acción */ }) {
-                                Box(
-                                    modifier = Modifier
-                                        .size(40.dp)
-                                        .background(Color.Transparent, CircleShape)
-                                ) {
-                                    Image(
-                                        painter = painterResource(id = R.drawable.fotoperfil),
-                                        contentDescription = "Logo",
-                                        contentScale = ContentScale.Crop,
-                                        modifier = Modifier
-                                            .fillMaxSize()
-                                    )
-                                }
-                            }
-                        }
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp)
+                    .clip(RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp))
+                    .padding(start = 0.dp, end = 0.dp),
+                backgroundColor = Color.White,
+                title = { Text("") },
+                navigationIcon = {
+                    IconButton(onClick = { }) {
+                        Icon(Icons.Filled.Menu,
+                            contentDescription = "Navegar hacia atrás",
+                            modifier = Modifier.size(36.dp))
                     }
                 },
-                backgroundColor = Color.White,
-                elevation = 0.dp,
-                //modifier = Modifier.height(56.dp),
+                actions = {
+                    Column(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxHeight(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.lg_agrokuby),
+                            contentDescription = "",
+                            contentScale = ContentScale.Fit,
+                            modifier = Modifier
+                                .size(150.dp)
+                        )
+                    }
+                    Column(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .width(40.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        IconButton(onClick = { /* Acción 2 */ }) {
+                            Image(
+                                painter = painterResource(id = R.drawable.user),
+                                contentDescription = "",
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier
+                                    .size(35.dp)
+                                    .clip(CircleShape)
+                            )
+                        }
+                    }
+                }
             )
+        },
+        bottomBar = {
+            navigation_bar()
         }
     ) {
 
-        Column(modifier = Modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier.fillMaxSize()
+                .background(backgroundColor)
+        ) {
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 item {
                     val lastIndex = batterry.BatterryRobot?.lastOrNull()
@@ -153,6 +150,5 @@ fun HomeScreen(
 
             }
         }
-        navigation_bar()
     }
 }
