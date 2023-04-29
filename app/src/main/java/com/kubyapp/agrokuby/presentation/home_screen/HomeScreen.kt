@@ -2,7 +2,6 @@ package com.kubyapp.agrokuby.presentation.home_screen
 
 import android.annotation.SuppressLint
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -11,34 +10,18 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.Share
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.airbnb.lottie.compose.LottieAnimation
-import com.airbnb.lottie.compose.LottieCompositionSpec
-import com.airbnb.lottie.compose.rememberLottieComposition
 import com.kubyapp.agrokuby.R
 import com.kubyapp.agrokuby.presentation.home_screen.components.MositureDataHolder
 import com.kubyapp.agrokuby.presentation.home_screen.components.StatusRobot
@@ -47,7 +30,6 @@ import com.kubyapp.agrokuby.presentation.home_screen.navigationbar.navigation_ba
 import com.kubyapp.agrokuby.presentation.lightness_screen.LightnessDataHolder
 import com.kubyapp.agrokuby.presentation.lightness_screen.LightnessViewModel
 import com.kubyapp.agrokuby.presentation.temperature_screen.TemperatureViewModel
-import com.kubyapp.agrokuby.ui.theme.BatteryFull
 import com.kubyapp.agrokuby.ui.theme.backgroundColor
 
 

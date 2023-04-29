@@ -10,6 +10,7 @@ import com.kubyapp.agrokuby.ui.theme.repository.SensorsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -29,7 +30,7 @@ class HomeViewModel @Inject constructor(
 
 
     private fun getStatusRobot() = viewModelScope.launch {
-        robotRepositoryImpl.getBattery().let { result ->
+        robotRepositoryImpl.getBattery().collectLatest { result ->
             when (result) {
                 is Resource.Error -> {
                     _getRobotStatus.value = getRobotStatus(isError = result.message.toString())
