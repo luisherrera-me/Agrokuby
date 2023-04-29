@@ -1,16 +1,11 @@
 package com.kubyapp.agrokuby.data.repository
 
-import android.util.Log
 import com.kubyapp.agrokuby.util.Resource
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.FirebaseFirestoreException
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
-import com.kubyapp.agrokuby.data.model.LightNess
-import com.kubyapp.agrokuby.ui.theme.repository.AuthRepository
+import com.kubyapp.domain.repository.AuthRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow

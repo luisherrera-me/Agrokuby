@@ -31,7 +31,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kubyapp.agrokuby.R
-import com.kubyapp.agrokuby.data.model.Soil
+import com.kubyapp.agrokuby.data.model.sensors.Soil
 import com.kubyapp.agrokuby.ui.theme.TempPulple
 import com.kubyapp.agrokuby.ui.theme.lightBlue
 

@@ -1,7 +1,7 @@
 package com.kubyapp.agrokuby.presentation.home_screen.components
 
 
-import com.kubyapp.agrokuby.data.model.Soil
+import com.kubyapp.agrokuby.data.model.sensors.Soil
 
 data class HomeState(
     val soil: List<Soil>? = emptyList(),

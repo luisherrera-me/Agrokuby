@@ -6,7 +6,7 @@ import com.kubyapp.agrokuby.data.repository.RobotRepositoryImpl
 import com.kubyapp.agrokuby.presentation.home_screen.components.HomeState
 import com.kubyapp.agrokuby.presentation.home_screen.components.getRobotStatus
 import com.kubyapp.agrokuby.util.Resource
-import com.kubyapp.agrokuby.ui.theme.repository.SensorsRepository
+import com.kubyapp.domain.repository.SensorsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

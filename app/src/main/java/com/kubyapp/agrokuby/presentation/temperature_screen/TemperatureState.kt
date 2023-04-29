@@ -1,6 +1,6 @@
 package com.kubyapp.agrokuby.presentation.temperature_screen
 
-import com.kubyapp.agrokuby.data.model.Soil
+import com.kubyapp.agrokuby.data.model.sensors.Soil
 
 data class TemperatureState(
     val temperature: List<Soil>? = emptyList(),

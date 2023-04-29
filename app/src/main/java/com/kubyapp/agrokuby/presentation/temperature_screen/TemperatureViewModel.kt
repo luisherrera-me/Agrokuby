@@ -3,7 +3,7 @@ package com.kubyapp.agrokuby.presentation.temperature_screen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kubyapp.agrokuby.util.Resource
-import com.kubyapp.agrokuby.ui.theme.repository.SensorsRepository
+import com.kubyapp.domain.repository.SensorsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

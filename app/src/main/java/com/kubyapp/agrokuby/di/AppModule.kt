@@ -7,8 +7,8 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.kubyapp.agrokuby.data.repository.AuthRepositoryImpl
 import com.kubyapp.agrokuby.data.repository.SensorsRepositoryImpl
-import com.kubyapp.agrokuby.ui.theme.repository.AuthRepository
-import com.kubyapp.agrokuby.ui.theme.repository.SensorsRepository
+import com.kubyapp.domain.repository.AuthRepository
+import com.kubyapp.domain.repository.SensorsRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
