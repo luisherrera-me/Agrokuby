@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -35,6 +36,7 @@ import androidx.compose.ui.unit.sp
 import com.kubyapp.agrokuby.R
 import com.kubyapp.agrokuby.data.model.RobotStatus.BatterryRobot
 import com.kubyapp.agrokuby.ui.theme.BatteryFull
+import com.kubyapp.agrokuby.ui.theme.RegularFont
 import com.kubyapp.agrokuby.ui.theme.TempPulple
 import com.kubyapp.agrokuby.ui.theme.lightBlue
 
@@ -43,16 +45,23 @@ import com.kubyapp.agrokuby.ui.theme.lightBlue
 fun StatusRobot(
     battery: BatterryRobot
 ) {
-    Surface(
+    Text(
+        modifier = Modifier.padding(top = 20.dp, start = 45.dp, end = 45.dp ),
+        text = "information for the robot",
+        fontWeight = FontWeight.Medium,
+        fontSize = 16.sp,
+        color = Color.Gray,
+        fontFamily = RegularFont
+    )
+
+    Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(200.dp)
+            .height(160.dp)
             .padding(horizontal = 20.dp)
-            .padding(vertical = 6.dp)
-            .clip(RoundedCornerShape(15.dp))
-            .background(MaterialTheme.colors.background),
-
-        elevation = 4.dp
+            .padding(vertical = 6.dp),
+        elevation = 5.dp,
+        shape = RoundedCornerShape(20.dp)
     ) {
         Row(
             modifier = Modifier

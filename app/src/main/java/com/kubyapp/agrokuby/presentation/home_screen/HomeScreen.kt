@@ -126,20 +126,16 @@ fun HomeScreen(
                     lastIndex?.let { StatusRobot(battery = it) }
                 }
                 item {
+                    val lastIndex = barometric.Barometric?.lastOrNull()
+                    lastIndex?.let { BarometricDataHolder(barometric = it) }
+                }
+                item {
                     val lastIndex = lightness.lightNess?.lastOrNull()
                     lastIndex?.let { LightnessDataHolder(lightNess = it) }
                 }
                 item {
                     val lastIndex = soil.temperature?.lastOrNull()
                     lastIndex?.let { TempDataHolder(soil = it) }
-                }
-                item {
-                    val lastIndex = soil.temperature?.lastOrNull()
-                    lastIndex?.let { MositureDataHolder(soil = it) }
-                }
-                item {
-                    val lastIndex = barometric.Barometric?.lastOrNull()
-                    lastIndex?.let { BarometricDataHolder(barometric = it) }
                 }
                 item {
                     val lastIndex = soil.temperature?.lastOrNull()
