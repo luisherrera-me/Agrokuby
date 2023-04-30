@@ -1,4 +1,4 @@
-package com.kubyapp.agrokuby.presentation.lightness_screen
+package com.kubyapp.agrokuby.presentation.home_screen.components.lightness_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

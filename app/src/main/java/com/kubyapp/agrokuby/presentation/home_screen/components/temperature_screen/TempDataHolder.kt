@@ -1,5 +1,8 @@
 package com.kubyapp.agrokuby.presentation.home_screen.components
 
+
+
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -8,6 +11,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -17,15 +21,22 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -34,31 +45,45 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kubyapp.agrokuby.R
 import com.kubyapp.agrokuby.data.model.sensors.Soil
-import com.kubyapp.agrokuby.ui.theme.Melocoton
+import com.kubyapp.agrokuby.ui.theme.AmarilloSuave
+import com.kubyapp.agrokuby.ui.theme.BLUE_LIGHT
+import com.kubyapp.agrokuby.ui.theme.GREEN_LIGHT
+import com.kubyapp.agrokuby.ui.theme.PURPLE_LIGHT
 import com.kubyapp.agrokuby.ui.theme.RegularFont
-import com.kubyapp.agrokuby.ui.theme.TempPulple
+import com.kubyapp.agrokuby.ui.theme.TEAL_LIGHT
+import com.kubyapp.agrokuby.ui.theme.VerdeMenta
 import com.kubyapp.agrokuby.ui.theme.lightBlue
+import kotlinx.coroutines.delay
+import kotlin.reflect.KProperty
 
-
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun TempDataHolder(
     soil: Soil
 ) {
+    var isPressed by remember { mutableStateOf(false) }
+
     Text(
-        modifier = Modifier.padding(top = 20.dp, start = 45.dp, end = 45.dp ),
+        modifier = Modifier.padding(top = 15.dp, start = 35.dp, end = 45.dp),
         text = "soil temperature",
         fontWeight = FontWeight.Medium,
         fontSize = 16.sp,
         color = Color.Gray,
         fontFamily = RegularFont
     )
+
     Card(
+        onClick = { isPressed = true },
         modifier = Modifier
             .fillMaxWidth()
-            .height(100.dp)
-            .padding(horizontal = 20.dp)
-            .padding(vertical = 6.dp),
-        elevation = 5.dp,
+            .fillMaxHeight()
+            .height(90.dp)
+            .padding(horizontal = 10.dp, vertical = 0.dp)
+            .scale(if (isPressed) 0.996f else 1f)//Escala
+            .alpha(if (isPressed) 0.98f else 1f)//Opacidad
+            .clickable { },
+        elevation = if (isPressed) 0.dp else 5.dp, //Modificación de la elevación
+        backgroundColor = Color.White,
         shape = RoundedCornerShape(20.dp)
     ) {
         Row(
@@ -74,11 +99,8 @@ fun TempDataHolder(
                 Box(
                     modifier = Modifier
                         .size(52.dp)
-                        .size(width = 70.dp, height = 25.dp)
-                        .clickable(onClick = {
-
-                        })
-                        .background(Melocoton, CircleShape),
+                        .background(color = TEAL_LIGHT
+                    , CircleShape),
                     contentAlignment = Alignment.Center
                 ) {
                     Image(
@@ -99,7 +121,6 @@ fun TempDataHolder(
                         overflow = TextOverflow.Ellipsis
                     )
                     Text(
-                        fontWeight = FontWeight.Medium,
                         text = "Second Text",
                         style = TextStyle(
                             fontSize = 14.sp,
@@ -129,16 +150,13 @@ fun TempDataHolder(
                         modifier = Modifier
                             .width(72.dp)
                             .size(width = 70.dp, height = 25.dp)
-                            .clickable(onClick = {
-
-                            })
                             .background(lightBlue, CircleShape)
                             .align(Alignment.Start),
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
                             fontWeight = FontWeight.Bold,
-                            text = "${soil.temp} °C",
+                            text = "${soil.temp} ºC",
                             style = TextStyle(
                                 fontSize = 14.sp,
                                 fontWeight = FontWeight.Normal
@@ -149,11 +167,15 @@ fun TempDataHolder(
                     }
                 }
             }
-
-
+        }
+    }
+    LaunchedEffect(isPressed) {
+        if (isPressed) {
+            delay(400)
+            isPressed = false
         }
     }
 
-
 }
+
 

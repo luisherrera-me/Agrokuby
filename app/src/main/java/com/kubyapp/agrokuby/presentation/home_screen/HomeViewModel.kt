@@ -3,10 +3,9 @@ package com.kubyapp.agrokuby.presentation.home_screen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kubyapp.agrokuby.data.repository.RobotRepositoryImpl
-import com.kubyapp.agrokuby.presentation.home_screen.components.HomeState
-import com.kubyapp.agrokuby.presentation.home_screen.components.getRobotStatus
+import com.kubyapp.agrokuby.presentation.home_screen.components.Robot_screen.getRobotStatus
 import com.kubyapp.agrokuby.util.Resource
-import com.kubyapp.domain.repository.SensorsRepository
+import com.kubyapp.domain.repository.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,18 +15,22 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val robotRepositoryImpl: RobotRepositoryImpl
+    private val robotRepositoryImpl: RobotRepositoryImpl,
+    private val authRepository: AuthRepository
+
 ) : ViewModel() {
 
     private val _getRobotStatus: MutableStateFlow<getRobotStatus> =
         MutableStateFlow(getRobotStatus())
     val getRobotStatus: StateFlow<getRobotStatus> = _getRobotStatus
 
+    fun signOut() {
+        authRepository.logout()
+    }
 
     init {
         getStatusRobot()//inicializacion
     }
-
 
     private fun getStatusRobot() = viewModelScope.launch {
         robotRepositoryImpl.getBattery().collectLatest { result ->
@@ -46,6 +49,4 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
-
-
 }

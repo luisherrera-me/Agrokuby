@@ -1,6 +1,7 @@
 package com.kubyapp.domain.repository
 
 import com.kubyapp.agrokuby.data.model.RobotStatus.BatterryRobot
+import com.kubyapp.agrokuby.data.model.user.UserInfo
 import com.kubyapp.agrokuby.util.Resource
 import kotlinx.coroutines.flow.Flow
 

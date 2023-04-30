@@ -46,7 +46,7 @@ fun StatusRobot(
     battery: BatterryRobot
 ) {
     Text(
-        modifier = Modifier.padding(top = 20.dp, start = 45.dp, end = 45.dp ),
+        modifier = Modifier.padding(top = 10.dp, start = 35.dp, end = 35.dp ),
         text = "information for the robot",
         fontWeight = FontWeight.Medium,
         fontSize = 16.sp,
@@ -58,8 +58,8 @@ fun StatusRobot(
         modifier = Modifier
             .fillMaxWidth()
             .height(160.dp)
-            .padding(horizontal = 20.dp)
-            .padding(vertical = 6.dp),
+            .padding(horizontal = 10.dp)
+            .padding(vertical = 0.dp),
         elevation = 5.dp,
         shape = RoundedCornerShape(20.dp)
     ) {
@@ -77,30 +77,43 @@ fun StatusRobot(
                 verticalAlignment = Alignment.CenterVertically
             )  {
                 IconButton(onClick = { /* acción */ }) {
+                    val batteryPercentage = battery.BatteryCapacity
+                    val batteryColor = when {
+                        battery.BatteryCharging -> Color.Green
+                        batteryPercentage >= 90 -> Color.Green
+                        batteryPercentage >= 80 -> Color.Green
+                        batteryPercentage >= 60 -> Color.Green
+                        batteryPercentage >= 40 -> Color.Yellow
+                        batteryPercentage >= 30 -> Color.Yellow
+                        batteryPercentage >= 20 -> Color.Yellow
+                        batteryPercentage >= 10 -> Color.Red
+                        else -> Color.Red
+                    }
+
                     Box(
                         modifier = Modifier
                             .size(52.dp)
                             .size(40.dp)
                             .size(width = 70.dp, height = 25.dp)
-                            .background(BatteryFull, CircleShape),
+                            .background(batteryColor, CircleShape),
                         contentAlignment = Alignment.Center
                     ) {
                         Image(
                             imageVector = when {
                                 battery.BatteryCharging -> ImageVector.vectorResource(id = R.drawable.ic_battery_charging)
-                                battery.BatteryCapacity >= 90 -> ImageVector.vectorResource(id = R.drawable.ic_battery_full)
-                                battery.BatteryCapacity >= 80 -> ImageVector.vectorResource(id = R.drawable.ic_battery_80)
-                                battery.BatteryCapacity >= 60 -> ImageVector.vectorResource(id = R.drawable.ic_battery_60)
-                                battery.BatteryCapacity >= 40 -> ImageVector.vectorResource(id = R.drawable.ic_battery_40)
-                                battery.BatteryCapacity >= 30 -> ImageVector.vectorResource(id = R.drawable.ic_battery_30)
-                                battery.BatteryCapacity >= 20 -> ImageVector.vectorResource(id = R.drawable.ic_battery_20)
-                                battery.BatteryCapacity >= 10 -> ImageVector.vectorResource(id = R.drawable.ic_battery_10)
+                                batteryPercentage >= 90 -> ImageVector.vectorResource(id = R.drawable.ic_battery_full)
+                                batteryPercentage >= 80 -> ImageVector.vectorResource(id = R.drawable.ic_battery_80)
+                                batteryPercentage >= 60 -> ImageVector.vectorResource(id = R.drawable.ic_battery_60)
+                                batteryPercentage >= 40 -> ImageVector.vectorResource(id = R.drawable.ic_battery_40)
+                                batteryPercentage >= 30 -> ImageVector.vectorResource(id = R.drawable.ic_battery_30)
+                                batteryPercentage >= 20 -> ImageVector.vectorResource(id = R.drawable.ic_battery_20)
+                                batteryPercentage >= 10 -> ImageVector.vectorResource(id = R.drawable.ic_battery_10)
                                 else -> ImageVector.vectorResource(id = R.drawable.ic_battery_empty)
-                                               },
+                            },
                             contentDescription = "Battery Icon",
                             modifier = Modifier.size(35.dp)
-                    )
-                }
+                        )
+                    }
             }
                 Spacer(modifier = Modifier.width(16.dp))
                 Column {

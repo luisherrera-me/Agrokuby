@@ -1,4 +1,4 @@
-package com.kubyapp.agrokuby.presentation.temperature_screen
+package com.kubyapp.agrokuby.presentation.home_screen.components.temperature_screen
 
 import com.kubyapp.agrokuby.data.model.sensors.Soil
 

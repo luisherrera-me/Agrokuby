@@ -45,6 +45,7 @@ import com.kubyapp.agrokuby.ui.theme.AzulCielo
 import com.kubyapp.agrokuby.ui.theme.BLUE_LIGHT
 import com.kubyapp.agrokuby.ui.theme.BatteryFull
 import com.kubyapp.agrokuby.ui.theme.GREEN_LIGHT
+import com.kubyapp.agrokuby.ui.theme.ORANGE_LIGHT
 import com.kubyapp.agrokuby.ui.theme.PURPLE_LIGHT
 import com.kubyapp.agrokuby.ui.theme.RegularFont
 import com.kubyapp.agrokuby.ui.theme.VerdeMenta
@@ -64,8 +65,8 @@ fun BarometricDataHolder(
 
 
     Text(
-        modifier = Modifier.padding(top = 20.dp, start = 45.dp, end = 45.dp ),
-        text = "Terrain barometric information",
+        modifier = Modifier.padding(top = 15.dp, start = 35.dp, end = 45.dp ),
+        text = "Barometric information",
         fontWeight = FontWeight.Medium,
         fontSize = 16.sp,
         color = Color.Gray,
@@ -76,7 +77,7 @@ fun BarometricDataHolder(
         modifier = Modifier
             .fillMaxWidth()
             .height(160.dp)
-            .padding(horizontal = 20.dp)
+            .padding(horizontal = 10.dp)
             .padding(vertical = 6.dp),
         elevation = 5.dp, //Modificación de la elevación
         shape = RoundedCornerShape(20.dp)
@@ -149,12 +150,12 @@ fun BarometricDataHolder(
                     .alpha(if (isPressed2) 0.9f else 1f)//Opacidad
                     .clickable { },
                 elevation = if (isPressed2) 0.dp else 5.dp, //Modificación de la elevación
-                backgroundColor = VerdeMenta,
+                backgroundColor = ORANGE_LIGHT,
                 shape = RoundedCornerShape(20.dp)
             ) {
                 Column(
                     modifier = Modifier
-                        .padding(horizontal = 10.dp, vertical = 20.dp)
+                        .padding(horizontal = 10.dp, vertical = 0.dp)
                         .weight(1f),
                     //.offset(x = -30.dp),
                     verticalArrangement = Arrangement.SpaceAround,

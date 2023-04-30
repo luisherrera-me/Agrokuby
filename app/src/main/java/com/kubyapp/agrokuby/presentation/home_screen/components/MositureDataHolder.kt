@@ -1,5 +1,6 @@
 package com.kubyapp.agrokuby.presentation.home_screen.components
 
+import android.graphics.drawable.Icon
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -17,13 +19,22 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
@@ -39,26 +50,36 @@ import com.kubyapp.agrokuby.ui.theme.BLUE_LIGHT
 import com.kubyapp.agrokuby.ui.theme.RegularFont
 import com.kubyapp.agrokuby.ui.theme.blue
 import com.kubyapp.agrokuby.ui.theme.lightBlue
+import kotlinx.coroutines.delay
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MositureDataHolder(
     soil: Soil
 ) {
+    var isPressed by remember { mutableStateOf(false) }
+
     Text(
-        modifier = Modifier.padding(top = 20.dp, start = 45.dp, end = 45.dp ),
-        text = "Humidity of floor",
+        modifier = Modifier.padding(top = 15.dp, start = 35.dp, end = 45.dp),
+        text = "Soil Moisture",
         fontWeight = FontWeight.Medium,
         fontSize = 16.sp,
         color = Color.Gray,
         fontFamily = RegularFont
     )
+
     Card(
+        onClick = { isPressed = true },
         modifier = Modifier
             .fillMaxWidth()
-            .height(100.dp)
-            .padding(horizontal = 20.dp)
-            .padding(vertical = 6.dp),
-        elevation = 5.dp,
+            .fillMaxHeight()
+            .height(90.dp)
+            .padding(horizontal = 10.dp, vertical = 0.dp)
+            .scale(if (isPressed) 0.996f else 1f)//Escala
+            .alpha(if (isPressed) 0.98f else 1f)//Opacidad
+            .clickable { },
+        elevation = if (isPressed) 0.dp else 5.dp, //Modificación de la elevación
+        backgroundColor = Color.White,
         shape = RoundedCornerShape(20.dp)
     ) {
         Row(
@@ -74,14 +95,11 @@ fun MositureDataHolder(
                 Box(
                     modifier = Modifier
                         .size(52.dp)
-                        .clickable(onClick = {
-
-                        })
                         .background(color = BLUE_LIGHT, CircleShape),
                     contentAlignment = Alignment.Center
                 ) {
                     Image(
-                        imageVector = ImageVector.vectorResource(id = R.drawable.ic_humidity),
+                        imageVector = ImageVector.vectorResource(id = R.drawable.humidity_percentage),
                         contentDescription = "Play Icon",
                         modifier = Modifier.size(40.dp)
                     )
@@ -89,7 +107,7 @@ fun MositureDataHolder(
                 Spacer(modifier = Modifier.width(16.dp))
                 Column {
                     Text(
-                        text = "Humedad",
+                        text = "Humidity",
                         style = TextStyle(
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Bold
@@ -127,18 +145,16 @@ fun MositureDataHolder(
                         modifier = Modifier
                             .width(72.dp)
                             .size(width = 70.dp, height = 25.dp)
-                            .clickable(onClick = {
-
-                            })
                             .background(lightBlue, CircleShape)
                             .align(Alignment.Start),
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = "${soil.moisture} %",
+                            fontWeight = FontWeight.Bold,
+                            text = "${soil.moisture} ºC",
                             style = TextStyle(
                                 fontSize = 14.sp,
-                                fontWeight = FontWeight.Bold
+                                fontWeight = FontWeight.Normal
                             ),
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
@@ -146,7 +162,12 @@ fun MositureDataHolder(
                     }
                 }
             }
-
+        }
+    }
+    LaunchedEffect(isPressed) {
+        if (isPressed) {
+            delay(400)
+            isPressed = false
         }
     }
 }
