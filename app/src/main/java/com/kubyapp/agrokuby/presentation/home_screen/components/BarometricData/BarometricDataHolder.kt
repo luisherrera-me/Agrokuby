@@ -62,6 +62,7 @@ fun BarometricDataHolder(
     var isPressed2 by remember { mutableStateOf(false) }
     var isPressed3 by remember { mutableStateOf(false) }
 
+
     Text(
         modifier = Modifier.padding(top = 25.dp, start = 45.dp, end = 45.dp ),
         text = "Terrain barometric information",
