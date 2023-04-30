@@ -24,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
@@ -33,13 +34,22 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kubyapp.agrokuby.R
 import com.kubyapp.agrokuby.data.model.sensors.LightNess
-import com.kubyapp.agrokuby.ui.theme.SunOrange
+import com.kubyapp.agrokuby.ui.theme.AmarilloSuave
+import com.kubyapp.agrokuby.ui.theme.RegularFont
 import com.kubyapp.agrokuby.ui.theme.lightBlue
 
 @Composable
 fun LightnessDataHolder(
     lightNess: LightNess
 ) {
+    Text(
+        modifier = Modifier.padding(top = 20.dp, start = 45.dp, end = 45.dp ),
+        text = "Ambient light",
+        fontWeight = FontWeight.Medium,
+        fontSize = 16.sp,
+        color = Color.Gray,
+        fontFamily = RegularFont
+    )
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -65,7 +75,7 @@ fun LightnessDataHolder(
                         .clickable(onClick = {
 
                         })
-                        .background(color = SunOrange, CircleShape),
+                        .background(color = AmarilloSuave, CircleShape),
                     contentAlignment = Alignment.Center
                 ) {
                     Image(

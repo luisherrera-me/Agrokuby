@@ -64,7 +64,7 @@ fun BarometricDataHolder(
 
 
     Text(
-        modifier = Modifier.padding(top = 25.dp, start = 45.dp, end = 45.dp ),
+        modifier = Modifier.padding(top = 20.dp, start = 45.dp, end = 45.dp ),
         text = "Terrain barometric information",
         fontWeight = FontWeight.Medium,
         fontSize = 16.sp,

@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -23,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
@@ -33,6 +35,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kubyapp.agrokuby.R
 import com.kubyapp.agrokuby.data.model.sensors.Soil
+import com.kubyapp.agrokuby.ui.theme.BLUE_LIGHT
+import com.kubyapp.agrokuby.ui.theme.RegularFont
 import com.kubyapp.agrokuby.ui.theme.blue
 import com.kubyapp.agrokuby.ui.theme.lightBlue
 
@@ -40,15 +44,22 @@ import com.kubyapp.agrokuby.ui.theme.lightBlue
 fun MositureDataHolder(
     soil: Soil
 ) {
-    Surface(
+    Text(
+        modifier = Modifier.padding(top = 20.dp, start = 45.dp, end = 45.dp ),
+        text = "Humidity of floor",
+        fontWeight = FontWeight.Medium,
+        fontSize = 16.sp,
+        color = Color.Gray,
+        fontFamily = RegularFont
+    )
+    Card(
         modifier = Modifier
             .fillMaxWidth()
             .height(100.dp)
             .padding(horizontal = 20.dp)
-            .padding(vertical = 6.dp)
-            .clip(RoundedCornerShape(15.dp))
-            .background(MaterialTheme.colors.background),
-        elevation = 4.dp
+            .padding(vertical = 6.dp),
+        elevation = 5.dp,
+        shape = RoundedCornerShape(20.dp)
     ) {
         Row(
             modifier = Modifier
@@ -66,7 +77,7 @@ fun MositureDataHolder(
                         .clickable(onClick = {
 
                         })
-                        .background(color = blue, CircleShape),
+                        .background(color = BLUE_LIGHT, CircleShape),
                     contentAlignment = Alignment.Center
                 ) {
                     Image(

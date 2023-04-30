@@ -140,10 +140,6 @@ fun HomeScreen(
                 item {
                     val lastIndex = soil.temperature?.lastOrNull()
                     lastIndex?.let { MositureDataHolder(soil = it) }
-                }
-                item {
-                    val lastIndex = soil.temperature?.lastOrNull()
-                    lastIndex?.let { MositureDataHolder(soil = it) }
                     Spacer(modifier = Modifier.height(110.dp))
                 }
 

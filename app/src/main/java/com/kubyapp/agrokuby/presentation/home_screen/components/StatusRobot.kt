@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.sp
 import com.kubyapp.agrokuby.R
 import com.kubyapp.agrokuby.data.model.RobotStatus.BatterryRobot
 import com.kubyapp.agrokuby.ui.theme.BatteryFull
+import com.kubyapp.agrokuby.ui.theme.RegularFont
 import com.kubyapp.agrokuby.ui.theme.TempPulple
 import com.kubyapp.agrokuby.ui.theme.lightBlue
 
@@ -44,6 +45,15 @@ import com.kubyapp.agrokuby.ui.theme.lightBlue
 fun StatusRobot(
     battery: BatterryRobot
 ) {
+    Text(
+        modifier = Modifier.padding(top = 20.dp, start = 45.dp, end = 45.dp ),
+        text = "information for the robot",
+        fontWeight = FontWeight.Medium,
+        fontSize = 16.sp,
+        color = Color.Gray,
+        fontFamily = RegularFont
+    )
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
