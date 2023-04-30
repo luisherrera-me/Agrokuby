@@ -16,7 +16,7 @@ fun NavigationGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Screens.HomeScreen.route
+        startDestination = Screens.SplashScreen.route
     ) {
         composable(route = Screens.SignInScreen.route) {
             SignInScreen(navController)
@@ -25,7 +25,7 @@ fun NavigationGraph(
             SignUpScreen(navController)
         }
         composable(route = Screens.HomeScreen.route){
-            HomeScreen()
+            HomeScreen(navController = navController)
         }
         composable(route = Screens.SplashScreen.route){
             AnimatedSplashScreen(navController = navController)

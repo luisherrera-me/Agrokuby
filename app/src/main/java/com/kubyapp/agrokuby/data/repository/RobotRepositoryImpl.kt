@@ -4,15 +4,14 @@ import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.google.rpc.context.AttributeContext
-import com.kubyapp.agrokuby.data.model.LightNess
-import com.kubyapp.agrokuby.util.Resource
 import com.kubyapp.agrokuby.data.model.RobotStatus.BatterryRobot
-import com.kubyapp.agrokuby.ui.theme.repository.StatusRobot
+import com.kubyapp.agrokuby.util.Resource
+import com.kubyapp.domain.repository.StatusRobot
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
+
 class RobotRepositoryImpl @Inject constructor(
 ): StatusRobot {
     private val batterryStatus = Firebase.firestore

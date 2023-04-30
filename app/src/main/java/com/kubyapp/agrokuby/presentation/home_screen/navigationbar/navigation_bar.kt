@@ -15,9 +15,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -29,17 +27,8 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.CalendarToday
-import androidx.compose.material.icons.filled.Group
 import androidx.compose.material.icons.filled.List
-import androidx.compose.material.icons.filled.PhotoCamera
-import androidx.compose.material.icons.filled.PsychologyAlt
-import androidx.compose.material.icons.filled.QrCode2
-import androidx.compose.material.icons.filled.QrCodeScanner
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Storage
-import androidx.compose.material.icons.filled.Stream
 import androidx.compose.material.icons.filled.ViewInAr
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -60,15 +49,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.kubyapp.agrokuby.R
 import com.kubyapp.agrokuby.ui.theme.BatteryFull
-import com.kubyapp.agrokuby.ui.theme.CircularMenu
 import com.kubyapp.agrokuby.ui.theme.DEFAULT_PADDING
 import com.kubyapp.agrokuby.ui.theme.FluidBottomNavigationTheme
-import com.kubyapp.agrokuby.ui.theme.ORANGE_LIGHT
-import com.kubyapp.agrokuby.ui.theme.Purple200
-import com.kubyapp.agrokuby.ui.theme.YELLOW_LIGHT
-import com.kubyapp.agrokuby.ui.theme.gray800
 import com.kubyapp.agrokuby.ui.theme.psycriatryColor
-
 import kotlin.math.PI
 import kotlin.math.sin
 
@@ -93,6 +76,7 @@ private fun getRenderEffect(): RenderEffect {
     return RenderEffect
         .createChainEffect(alphaMatrix, blurEffect)
 }
+
 @Composable
 fun navigation_bar() {
     val isMenuExtended = remember { mutableStateOf(false) }
@@ -192,7 +176,7 @@ fun CustomBottomNavigation() {
             .padding(horizontal = 50.dp)
     ) {
         val images = listOf(R.drawable.ic_psychiatry_menu, R.drawable.ic_settings_menu)
-        val colors = listOf(psycriatryColor, YELLOW_LIGHT)
+        val colors = listOf(psycriatryColor, Color.Black)
 
         images.mapIndexed { index, image ->
             IconButton(onClick = { }) {
@@ -277,7 +261,7 @@ fun AnimatedFab(
     modifier: Modifier,
     icon: ImageVector? = null,
     opacity: Float = 1f,
-    backgroundColor: Color = gray800,
+    backgroundColor: Color = BatteryFull,
     onClick: () -> Unit = {}
 ) {
     FloatingActionButton(
@@ -290,7 +274,7 @@ fun AnimatedFab(
             Icon(
                 imageVector = it,
                 contentDescription = null,
-                tint = ORANGE_LIGHT.copy(alpha = opacity)
+                tint = Color.Black.copy(alpha = opacity)
             )
         }
     }

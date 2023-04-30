@@ -14,6 +14,9 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -22,8 +25,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.kubyapp.agrokuby.R
-import com.kubyapp.agrokuby.data.model.sensors.Barometric
+import com.kubyapp.agrokuby.navigation.Screens
 import com.kubyapp.agrokuby.presentation.home_screen.components.BarometricData.BarometricDataHolder
 import com.kubyapp.agrokuby.presentation.home_screen.components.BarometricData.BarometricViewModel
 import com.kubyapp.agrokuby.presentation.home_screen.components.MositureDataHolder
@@ -42,14 +46,16 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     temperatureViewModel: TemperatureViewModel = hiltViewModel(),
     lightnessViewModel: LightnessViewModel = hiltViewModel(),
-    barometricViewModel: BarometricViewModel = hiltViewModel()
+    barometricViewModel: BarometricViewModel = hiltViewModel(),
+    navController: NavController
 ) {
     val lightness by lightnessViewModel.getLightness.collectAsState()
     val batterry by viewModel.getRobotStatus.collectAsState()
     val soil by temperatureViewModel.getTemperatureState.collectAsState()
     val barometric by barometricViewModel.getBarometricState.collectAsState()
+    var expanded by remember { mutableStateOf(false) }
 
-    Log.d("TAG","HomeScreen: ${barometric.Barometric}")
+    Log.d("TAG", "HomeScreen: ${barometric.Barometric}")
     Log.d("TAG", "HomeScreen: ${lightness.lightNess}")
     Log.d("TAG", "HomeScreen: ${soil.temperature}")
     Log.d("TAG", "HomeScreen: ${batterry.BatterryRobot}")
@@ -68,9 +74,11 @@ fun HomeScreen(
                 title = { Text("") },
                 navigationIcon = {
                     IconButton(onClick = { }) {
-                        Icon(Icons.Filled.Menu,
+                        Icon(
+                            Icons.Filled.Menu,
                             contentDescription = "Navegar hacia atrás",
-                            modifier = Modifier.size(36.dp))
+                            modifier = Modifier.size(36.dp)
+                        )
                     }
                 },
                 actions = {
@@ -96,7 +104,7 @@ fun HomeScreen(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
-                        IconButton(onClick = { /* Acción 2 */ }) {
+                        IconButton(onClick = { expanded = true }) {
                             Image(
                                 painter = painterResource(id = R.drawable.user),
                                 contentDescription = "",
@@ -105,6 +113,19 @@ fun HomeScreen(
                                     .size(35.dp)
                                     .clip(CircleShape)
                             )
+                        }
+                        DropdownMenu(
+                            expanded = expanded,
+                            onDismissRequest = { expanded = false },
+                            modifier = Modifier.align(Alignment.End)
+                        ) {
+                            DropdownMenuItem(onClick = {
+                                viewModel.signOut()
+                                navController.popBackStack()
+                                navController.navigate(Screens.SignInScreen.route)
+                            }) {
+                                Text("Logout")
+                            }
                         }
                     }
                 }
