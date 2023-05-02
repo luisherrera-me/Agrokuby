@@ -69,7 +69,7 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getDataUser(): Flow<Resource<List<UserInfo>>> = flow {
+    override suspend fun getDataUser(): Flow<Resource<UserInfo>> = flow {
         try {
             val firebaseAuth = FirebaseAuth.getInstance()
             val currentUser = firebaseAuth.currentUser
@@ -84,7 +84,7 @@ class AuthRepositoryImpl @Inject constructor(
             val UserData = documentSnapshot?.toObject(UserInfo::class.java)
             Log.d("Repository", "User data: $UserData")
             if (UserData != null) {
-                emit(Resource.Success(listOf(UserData)))
+                emit(Resource.Success(UserData))
             } else {
                 emit( Resource.Error("Data user null"))
             }

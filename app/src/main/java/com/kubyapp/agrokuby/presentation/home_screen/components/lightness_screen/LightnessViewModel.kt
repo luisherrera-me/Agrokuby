@@ -1,5 +1,6 @@
 package com.kubyapp.agrokuby.presentation.home_screen.components.lightness_screen
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kubyapp.agrokuby.util.Resource
@@ -28,6 +29,7 @@ class LightnessViewModel  @Inject constructor(
         sensorsRepository.getLightness().let { result ->
             when (result) {
                 is Resource.Success -> {
+                    Log.d("resultdata", "getAllLightness: $result.data")
                     _getLightness.value = LightnessState(lightNess = result.data)
                 }
 

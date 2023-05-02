@@ -5,10 +5,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.kubyapp.agrokuby.presentation.Splash_Screen.AnimatedSplashScreen
 import com.kubyapp.agrokuby.presentation.home_screen.HomeScreen
 import com.kubyapp.agrokuby.presentation.login_screen.SignInScreen
 import com.kubyapp.agrokuby.presentation.signup_screen.SignUpScreen
-import com.kubyapp.agrokuby.presentation.Splash_Screen.AnimatedSplashScreen
 
 @Composable
 fun NavigationGraph(

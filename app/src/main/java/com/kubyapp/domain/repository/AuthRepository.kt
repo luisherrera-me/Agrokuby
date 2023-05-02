@@ -16,6 +16,6 @@ interface AuthRepository {
 
     fun logout()
 
-    suspend fun getDataUser(): Flow<Resource<List<UserInfo>>>
+    suspend fun getDataUser(): Flow<Resource<UserInfo>>
     fun googleSignIn(credential: AuthCredential): Flow<Resource<AuthResult>>
 }

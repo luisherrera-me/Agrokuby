@@ -1,4 +1,4 @@
-package com.kubyapp.agrokuby.presentation.home_screen.components.User_screen
+package com.kubyapp.agrokuby.presentation.home_screen.components.user_screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -39,7 +39,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kubyapp.agrokuby.R
-import com.kubyapp.agrokuby.data.model.sensors.LightNess
 import com.kubyapp.agrokuby.data.model.user.UserInfo
 import com.kubyapp.agrokuby.ui.theme.AmarilloSuave
 import com.kubyapp.agrokuby.ui.theme.RegularFont
