@@ -125,7 +125,7 @@ fun BarometricDataHolder(
                         overflow = TextOverflow.Ellipsis
                     )
                     Text(
-                        text = "${barometric.altitud} m",
+                        text = "${barometric.altitud} M",
                         style = TextStyle(
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Bold
@@ -176,7 +176,7 @@ fun BarometricDataHolder(
                         overflow = TextOverflow.Ellipsis
                     )
                     Text(
-                        text = "${barometric.temperatura} m",
+                        text = "${barometric.temperatura} °C",
                         style = TextStyle(
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Bold
@@ -230,7 +230,7 @@ fun BarometricDataHolder(
                         overflow = TextOverflow.Ellipsis
                     )
                     Text(
-                        text = "${barometric.presion} m",
+                        text = "${barometric.presion} PA",
                         style = TextStyle(
                             fontSize = 14.sp,
                             color = Color.Black,

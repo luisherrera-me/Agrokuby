@@ -152,7 +152,7 @@ fun LightnessDataHolder(
                     ) {
                         Text(
                             fontWeight = FontWeight.Bold,
-                            text = "${lightNess.light} ºC",
+                            text = "${lightNess.light} Lux",
                             style = TextStyle(
                                 fontSize = 14.sp,
                                 fontWeight = FontWeight.Normal

@@ -151,7 +151,7 @@ fun MositureDataHolder(
                     ) {
                         Text(
                             fontWeight = FontWeight.Bold,
-                            text = "${soil.moisture} ºC",
+                            text = "${soil.moisture} %",
                             style = TextStyle(
                                 fontSize = 14.sp,
                                 fontWeight = FontWeight.Normal
