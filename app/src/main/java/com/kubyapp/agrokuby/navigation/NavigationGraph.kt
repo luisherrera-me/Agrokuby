@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.kubyapp.agrokuby.presentation.Splash_Screen.AnimatedSplashScreen
 import com.kubyapp.agrokuby.presentation.home_screen.HomeScreen
+import com.kubyapp.agrokuby.presentation.home_screen.components.ChartsData_Screen.ChartScreen
 import com.kubyapp.agrokuby.presentation.login_screen.SignInScreen
 import com.kubyapp.agrokuby.presentation.signup_screen.SignUpScreen
 
@@ -30,7 +31,13 @@ fun NavigationGraph(
         composable(route = Screens.SplashScreen.route){
             AnimatedSplashScreen(navController = navController)
         }
+        composable(route = Screens.ChartScreen.route){
+            ChartScreen(navController)
+        }
+
     }
 
 }
+
+
 

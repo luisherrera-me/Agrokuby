@@ -15,38 +15,34 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.BottomAppBar
+import androidx.compose.material.BottomNavigation
+import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.FloatingActionButtonDefaults
 import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.CalendarToday
-import androidx.compose.material.icons.filled.Group
 import androidx.compose.material.icons.filled.List
-import androidx.compose.material.icons.filled.PhotoCamera
-import androidx.compose.material.icons.filled.PsychologyAlt
-import androidx.compose.material.icons.filled.QrCode2
-import androidx.compose.material.icons.filled.QrCodeScanner
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Storage
-import androidx.compose.material.icons.filled.Stream
 import androidx.compose.material.icons.filled.ViewInAr
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.scale
@@ -56,18 +52,22 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import com.kubyapp.agrokuby.R
-import com.kubyapp.agrokuby.ui.theme.BatteryFull
-import com.kubyapp.agrokuby.ui.theme.CircularMenu
 import com.kubyapp.agrokuby.ui.theme.DEFAULT_PADDING
 import com.kubyapp.agrokuby.ui.theme.FluidBottomNavigationTheme
 import com.kubyapp.agrokuby.ui.theme.ORANGE_LIGHT
-import com.kubyapp.agrokuby.ui.theme.Purple200
-import com.kubyapp.agrokuby.ui.theme.YELLOW_LIGHT
+import com.kubyapp.agrokuby.ui.theme.RegularFont
+import com.kubyapp.agrokuby.ui.theme.gray300
+import com.kubyapp.agrokuby.ui.theme.gray400
+import com.kubyapp.agrokuby.ui.theme.gray600
 import com.kubyapp.agrokuby.ui.theme.gray800
-import com.kubyapp.agrokuby.ui.theme.psycriatryColor
 
 import kotlin.math.PI
 import kotlin.math.sin
@@ -94,8 +94,15 @@ private fun getRenderEffect(): RenderEffect {
         .createChainEffect(alphaMatrix, blurEffect)
 }
 @Composable
-fun navigation_bar() {
+fun navigation_bar(
+    navController: NavController,
+    menu_items: List<Items_menu>
+) {
     val isMenuExtended = remember { mutableStateOf(false) }
+
+    val NavController = rememberNavController()
+    val ScaffoldState = rememberScaffoldState()
+    val Scope = rememberCoroutineScope()
 
     val fabAnimationProgress by animateFloatAsState(
         targetValue = if (isMenuExtended.value) 1f else 0f,
@@ -120,9 +127,11 @@ fun navigation_bar() {
     }
 
     navigation_bar(
+        navController = NavController,
         renderEffect = renderEffect,
         fabAnimationProgress = fabAnimationProgress,
-        clickAnimationProgress = clickAnimationProgress
+        clickAnimationProgress = clickAnimationProgress,
+
     ) {
         isMenuExtended.value = isMenuExtended.value.not()
     }
@@ -131,18 +140,30 @@ fun navigation_bar() {
 
 @Composable
 fun navigation_bar(
+    navController: NavController,
     renderEffect: androidx.compose.ui.graphics.RenderEffect?,
     fabAnimationProgress: Float = 0f,
     clickAnimationProgress: Float = 0f,
     toggleAnimation: () -> Unit = { }
+
 ) {
+    val navController = rememberNavController()
+    val scaffoldState = rememberScaffoldState()
+    val scope = rememberCoroutineScope()
+
+    val navigacion_item = listOf(
+        Items_menu.Pantallas1,
+        Items_menu.Pantallas2,
+        Items_menu.Pantallas3
+
+    )
     Box(
         Modifier
             .fillMaxSize()
             .padding(bottom = 4.dp),
         contentAlignment = Alignment.BottomCenter
     ) {
-        CustomBottomNavigation()
+        CustomBottomNavigation(navController, navigacion_item)
         Circle(
             color = MaterialTheme.colors.primary.copy(alpha = 0.5f),
             animationProgress = 0.5f
@@ -160,6 +181,8 @@ fun navigation_bar(
         )
     }
 }
+
+
 
 @Composable
 fun Circle(color: Color, animationProgress: Float) {
@@ -179,32 +202,77 @@ fun Circle(color: Color, animationProgress: Float) {
 }
 
 @Composable
-fun CustomBottomNavigation() {
+fun currentRouter(navController: NavHostController):String?{
+    val entrada by navController.currentBackStackEntryAsState()
+    return entrada?.destination?.route
+}
+
+
+
+@Composable
+fun CustomBottomNavigation(
+    navController: NavController,
+    menu_items: List<Items_menu>
+) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .height(100.dp)
-            .paint(
-                painter = painterResource(R.drawable.navigation_bar),
-                contentScale = ContentScale.FillHeight
-            )
-            .padding(horizontal = 50.dp)
+            .padding(horizontal = 40.dp)
     ) {
-        val images = listOf(R.drawable.ic_psychiatry_menu, R.drawable.ic_settings_menu)
-        val colors = listOf(psycriatryColor, YELLOW_LIGHT)
-
-        images.mapIndexed { index, image ->
-            IconButton(onClick = { }) {
-                Icon(
-                    painter = painterResource(id = image),
-                    contentDescription = null,
-                    tint = colors[index]
-                )
+        BottomAppBar(
+            modifier = Modifier
+                .weight(1f)
+                .height(300.dp)
+                .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp)),
+            elevation = 0.dp,
+            backgroundColor = Color.Transparent
+        ) {
+            BottomNavigation(
+                modifier = Modifier
+                    .weight(1f)
+                    .height(70  .dp)
+                    .clip(RoundedCornerShape(
+                        topStart = 25.dp,
+                        topEnd = 25.dp,
+                        bottomStart = 25.dp,
+                        bottomEnd = 25.dp
+                    )),
+                backgroundColor = gray600,
+                elevation = 2.dp
+            ) {
+                val currentRoute = currentRouter(navController = navController as NavHostController)
+                menu_items.forEach { item ->
+                    BottomNavigationItem(
+                        selected = currentRoute == item.ruta,
+                        onClick = { navController.navigate(item.ruta) },
+                        icon = {
+                            Icon(
+                                painter = painterResource(id = item.icon),
+                                contentDescription = item.title,
+                                tint = item.iconColor
+                            )
+                        },
+                        label = {
+                            Text(
+                                item.title,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White,
+                                fontFamily = RegularFont
+                            )
+                        },
+                        alwaysShowLabel = false
+                    )
+                }
             }
         }
+
     }
 }
+
+
+
 
 @Composable
 fun FabGroup(
@@ -216,7 +284,7 @@ fun FabGroup(
         Modifier
             .fillMaxSize()
             .graphicsLayer { this.renderEffect = renderEffect }
-            .padding(bottom = 50.dp),
+            .padding(bottom = 75.dp),
         contentAlignment = Alignment.BottomCenter
     ) {
 
@@ -280,6 +348,7 @@ fun AnimatedFab(
     backgroundColor: Color = gray800,
     onClick: () -> Unit = {}
 ) {
+
     FloatingActionButton(
         onClick = onClick,
         elevation = FloatingActionButtonDefaults.elevation(0.dp, 0.dp, 0.dp, 0.dp),
@@ -300,7 +369,17 @@ fun AnimatedFab(
 @Composable
 @Preview()
 private fun MainScreenPreview() {
+    val navController = rememberNavController()
+    val scaffoldState = rememberScaffoldState()
+    val scope = rememberCoroutineScope()
+
+    val navigacion_item = listOf(
+        Items_menu.Pantallas1,
+        Items_menu.Pantallas2,
+        Items_menu.Pantallas3
+
+    )
     FluidBottomNavigationTheme {
-        navigation_bar()
+        navigation_bar(navController, navigacion_item)
     }
 }

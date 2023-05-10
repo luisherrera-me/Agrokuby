@@ -4,7 +4,6 @@ import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-
 import com.kubyapp.agrokuby.util.Resource
 import com.kubyapp.agrokuby.data.model.RobotStatus.BatterryRobot
 import com.kubyapp.domain.repository.StatusRobot
