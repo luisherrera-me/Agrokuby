@@ -28,6 +28,8 @@ val LilaClaro = Color(0xFFD3BEE2)
 val GrisAzulado = Color(0xFFC8D6E5)
 val VerdeAgua = Color(0xFFA2D2C9)
 
+val lightRed = Color(0xFFFFB7BE)
+
 val PINK_LIGHT = Color(0xFFFFCDD2)
 val TEAL_LIGHT = Color(0xFFB2DFDB)
 val BLUE_LIGHT = Color(0xFFBBDEFB)

@@ -55,7 +55,7 @@ class AuthRepositoryImpl @Inject constructor(
             val GAuthentication = false
             val user = hashMapOf(
                 "username" to username,
-                "photoUser" to "NO-PHOTO",
+                "photoUser" to "",
                 "GAutentica" to GAuthentication
                 // Agrega otros campos que quieras guardar
             )
@@ -99,7 +99,7 @@ override fun googleSignIn(credential: AuthCredential): Flow<Resource<AuthResult>
         emit(Resource.Loading())
         val result = firebaseAuth.signInWithCredential(credential).await()
         val userId = result.user?.uid
-        val GAuthentication = false
+        val GAuthentication = true
         val user = hashMapOf(
             "username" to result.user?.displayName,
             "GAutentica" to GAuthentication,

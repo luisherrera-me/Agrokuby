@@ -15,6 +15,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,7 +25,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import com.kubyapp.agrokuby.R
 import com.kubyapp.agrokuby.navigation.Screens
 import com.kubyapp.agrokuby.presentation.home_screen.components.BarometricData.BarometricDataHolder
@@ -39,11 +43,19 @@ import com.kubyapp.agrokuby.presentation.home_screen.components.lightness_screen
 import com.kubyapp.agrokuby.presentation.home_screen.components.lightness_screen.LightnessViewModel
 import com.kubyapp.agrokuby.presentation.home_screen.components.temperature_screen.TemperatureViewModel
 import com.kubyapp.agrokuby.presentation.home_screen.components.user_screen.ProfilePicture
+import com.kubyapp.agrokuby.presentation.home_screen.navigationbar.CustomBottomNavigation
+import com.kubyapp.agrokuby.presentation.home_screen.navigationbar.Items_menu
+import com.kubyapp.agrokuby.presentation.home_screen.navigationbar.bar_view.NavegacionHost
 import com.kubyapp.agrokuby.presentation.home_screen.navigationbar.navigation_bar
 
 import com.kubyapp.agrokuby.ui.theme.backgroundColor
 import com.kubyapp.agrokuby.ui.theme.gray300
 
+@Composable
+fun currentRouter(navController: NavHostController):String?{
+    val entrada by navController.currentBackStackEntryAsState()
+    return entrada?.destination?.route
+}
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -54,7 +66,21 @@ fun HomeScreen(
     userData: UserViewModel = hiltViewModel(),
     barometricViewModel: BarometricViewModel = hiltViewModel(),
     navController: NavHostController
+
 ) {
+
+    val navController = rememberNavController()
+    val scaffoldState = rememberScaffoldState()
+    val scope = rememberCoroutineScope()
+
+    val navigacion_item = listOf(
+        Items_menu.Pantallas1,
+        Items_menu.Pantallas2,
+        Items_menu.Pantallas3
+
+    )
+
+
     val lightness by lightnessViewModel.getLightness.collectAsState()
     val batterry by viewModel.getRobotStatus.collectAsState()
     val soil by temperatureViewModel.getTemperatureState.collectAsState()
@@ -125,9 +151,7 @@ fun HomeScreen(
                                     viewModel.signOut()
                                     navController.popBackStack()
                                     navController.navigate(Screens.SignInScreen.route)
-                                }, modifier = Modifier
-                                    .align(Alignment.End)
-                                    .background(gray300),
+                                },
                                 expanded = expanded,
                                 onDismissClick = {
                                     expanded = false
@@ -138,9 +162,7 @@ fun HomeScreen(
                 }
             )
         },
-        bottomBar = {
-            navigation_bar()
-        }
+
     ) {
 
         Column(
@@ -149,9 +171,11 @@ fun HomeScreen(
                 .background(backgroundColor)
         ) {
             LazyColumn(modifier = Modifier.fillMaxSize()) {
+                /*
                 item {
                     user.User?.let { it1 -> UserScreen(userInfo = it1) }
                 }
+                */
                 item {
                     val lastIndex = batterry.BatterryRobot?.lastOrNull()
                     lastIndex?.let { StatusRobot(battery = it) }
@@ -162,7 +186,9 @@ fun HomeScreen(
                 }
                 item {
                     val lastIndex = lightness.lightNess?.lastOrNull()
-                    lastIndex?.let { LightnessDataHolder(lightNess = it) }
+                    lastIndex?.let {
+                        LightnessDataHolder(lightNess = it, navController = navController)
+                    }
                 }
                 item {
                     val lastIndex = soil.temperature?.lastOrNull()
@@ -174,6 +200,13 @@ fun HomeScreen(
                     Spacer(modifier = Modifier.height(110.dp))
                 }
             }
+        }
+
+        Scaffold (
+            scaffoldState = scaffoldState,
+            bottomBar = { CustomBottomNavigation(navController, navigacion_item)}
+                ){
+            NavegacionHost(navController)
         }
     }
 }

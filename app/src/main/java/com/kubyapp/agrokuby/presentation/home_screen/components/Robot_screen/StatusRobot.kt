@@ -36,9 +36,11 @@ import androidx.compose.ui.unit.sp
 import com.kubyapp.agrokuby.R
 import com.kubyapp.agrokuby.data.model.RobotStatus.BatterryRobot
 import com.kubyapp.agrokuby.ui.theme.BatteryFull
+import com.kubyapp.agrokuby.ui.theme.ORANGE_LIGHT
 import com.kubyapp.agrokuby.ui.theme.RegularFont
 import com.kubyapp.agrokuby.ui.theme.TempPulple
 import com.kubyapp.agrokuby.ui.theme.lightBlue
+import com.kubyapp.agrokuby.ui.theme.lightRed
 
 
 @Composable
@@ -77,17 +79,19 @@ fun StatusRobot(
                 verticalAlignment = Alignment.CenterVertically
             )  {
                 IconButton(onClick = { /* acción */ }) {
-                    val batteryPercentage = battery.BatteryCapacity
+                    val batteryPercentage  = battery.BatteryCapacity
                     val batteryColor = when {
-                        battery.BatteryCharging -> Color.Green
-                        batteryPercentage >= 90 -> Color.Green
-                        batteryPercentage >= 80 -> Color.Green
-                        batteryPercentage >= 60 -> Color.Green
-                        batteryPercentage >= 40 -> Color.Yellow
-                        batteryPercentage >= 30 -> Color.Yellow
-                        batteryPercentage >= 20 -> Color.Yellow
-                        batteryPercentage >= 10 -> Color.Red
-                        else -> Color.Red
+
+                        battery.BatteryCharging -> ORANGE_LIGHT
+                        battery.BatteryCharging -> BatteryFull
+                        batteryPercentage >= 90 -> BatteryFull
+                        batteryPercentage >= 80 -> BatteryFull
+                        batteryPercentage >= 60 -> BatteryFull
+                        batteryPercentage >= 40 -> ORANGE_LIGHT
+                        batteryPercentage >= 30 -> ORANGE_LIGHT
+                        batteryPercentage >= 20 -> lightRed
+                        batteryPercentage >= 10 -> lightRed
+                        else -> lightRed
                     }
 
                     Box(
@@ -100,7 +104,7 @@ fun StatusRobot(
                     ) {
                         Image(
                             imageVector = when {
-                                battery.BatteryCharging -> ImageVector.vectorResource(id = R.drawable.ic_battery_charging)
+                                battery.BatteryCharging -> ImageVector.vectorResource(id = R.drawable.ic_bolt)
                                 batteryPercentage >= 90 -> ImageVector.vectorResource(id = R.drawable.ic_battery_full)
                                 batteryPercentage >= 80 -> ImageVector.vectorResource(id = R.drawable.ic_battery_80)
                                 batteryPercentage >= 60 -> ImageVector.vectorResource(id = R.drawable.ic_battery_60)

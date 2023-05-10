@@ -38,8 +38,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.rememberNavController
 import com.kubyapp.agrokuby.R
 import com.kubyapp.agrokuby.data.model.user.UserInfo
+import com.kubyapp.agrokuby.navigation.Screens
 import com.kubyapp.agrokuby.ui.theme.AmarilloSuave
 import com.kubyapp.agrokuby.ui.theme.RegularFont
 import com.kubyapp.agrokuby.ui.theme.lightBlue
@@ -48,8 +50,10 @@ import kotlinx.coroutines.delay
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun UserScreen(
-    userInfo: UserInfo
+    userInfo: UserInfo,
+
 ) {
+    val navController = rememberNavController()
     var isPressed by remember { mutableStateOf(false) }
 
     Text(
@@ -66,7 +70,11 @@ fun UserScreen(
     )
 
     Card(
-        onClick = { isPressed = true },
+
+        onClick = {
+            isPressed = true
+            navController.navigate(Screens.SplashScreen.route)
+                  },
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
@@ -74,7 +82,7 @@ fun UserScreen(
             .padding(horizontal = 10.dp, vertical = 0.dp)
             .scale(if (isPressed) 0.996f else 1f)//Escala
             .alpha(if (isPressed) 0.98f else 1f)//Opacidad
-            .clickable { },
+            .clickable {Screens.ChartScreen.route},
         elevation = if (isPressed) 0.dp else 5.dp, //Modificación de la elevación
         backgroundColor = Color.White,
         shape = RoundedCornerShape(20.dp)
