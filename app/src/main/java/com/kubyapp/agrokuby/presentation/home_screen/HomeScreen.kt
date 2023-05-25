@@ -5,10 +5,13 @@ import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -30,16 +33,20 @@ import androidx.navigation.compose.rememberNavController
 import com.kubyapp.agrokuby.R
 import com.kubyapp.agrokuby.navigation.Screens
 import com.kubyapp.agrokuby.presentation.home_screen.components.user_screen.DropDown
-import com.kubyapp.agrokuby.presentation.home_screen.components.user_screen.UserViewModel
 import com.kubyapp.agrokuby.presentation.home_screen.components.user_screen.ProfilePicture
+import com.kubyapp.agrokuby.presentation.home_screen.components.user_screen.UserViewModel
 import com.kubyapp.agrokuby.presentation.home_screen.navigationbar.CustomBottomNavigation
+import com.kubyapp.agrokuby.presentation.home_screen.navigationbar.DrawerBody
+import com.kubyapp.agrokuby.presentation.home_screen.navigationbar.DrawerHeader
 import com.kubyapp.agrokuby.presentation.home_screen.navigationbar.Items_menu
+import com.kubyapp.agrokuby.presentation.home_screen.navigationbar.MenuItem
 import com.kubyapp.agrokuby.presentation.home_screen.navigationbar.bar_view.NavegacionHost
 import com.kubyapp.agrokuby.ui.theme.gray300
+import kotlinx.coroutines.launch
 
 
 @Composable
-fun currentRouter(navController: NavHostController):String?{
+fun currentRouter(navController: NavHostController): String? {
     val entrada by navController.currentBackStackEntryAsState()
     return entrada?.destination?.route
 }
@@ -54,6 +61,7 @@ fun HomeScreen(
 
 
     val navController = rememberNavController()
+    val scope = rememberCoroutineScope()
 
 
     val navigacion_item = listOf(
@@ -69,8 +77,11 @@ fun HomeScreen(
 
     Log.d("TAG", "HomeScreen: ${user.User}")
 
+    val scaffoldState = rememberScaffoldState()
+
 
     Scaffold(
+        scaffoldState = scaffoldState,
         backgroundColor = Color.Transparent,
         topBar = {
             TopAppBar(
@@ -82,7 +93,11 @@ fun HomeScreen(
                 backgroundColor = Color.White,
                 title = { Text("") },
                 navigationIcon = {
-                    IconButton(onClick = { }) {
+                    IconButton(onClick = {
+                        scope.launch {
+                            scaffoldState.drawerState.open()
+                        }
+                    }) {
                         Icon(
                             Icons.Filled.Menu,
                             contentDescription = "Navegar hacia atrás",
@@ -139,11 +154,41 @@ fun HomeScreen(
                 }
             )
         },
+        drawerGesturesEnabled = scaffoldState.drawerState.isOpen,
+        drawerContent = {
+            DrawerHeader()
+            DrawerBody(
+                items = listOf(
+                    MenuItem(
+                        id = "home",
+                        title = "Home",
+                        contentDescription = "Go to home screen",
+                        icon = Icons.Default.Home
+                    ),
+                    MenuItem(
+                        id = "settings",
+                        title = "Settings",
+                        contentDescription = "Go to settings screen",
+                        icon = Icons.Default.Settings
+                    ),
+                    MenuItem(
+                        id = "help",
+                        title = "Help",
+                        contentDescription = "Get help",
+                        icon = Icons.Default.Info
+                    ),
+                ),
+                onItemClick = {
+                    println("Clicked on ${it.title}")
+                }
+            )
+        }
     ) {
 
-        Scaffold (
-            bottomBar = { CustomBottomNavigation(navController, navigacion_item)}
-                ){
+
+        Scaffold(
+            bottomBar = { CustomBottomNavigation(navController, navigacion_item) }
+        ) {
             NavegacionHost(navController)
         }
     }

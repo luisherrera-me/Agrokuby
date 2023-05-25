@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 
 import com.kubyapp.agrokuby.presentation.home_screen.navigationbar.Items_menu
 import com.kubyapp.agrokuby.presentation.home_screen.navigationbar.bar_view.psychiatry_screen.Psychiatry
+import com.kubyapp.agrokuby.presentation.home_screen.navigationbar.bar_view.starting_screen.startingScreen
 
 @Composable
 fun NavegacionHost(navController: NavController){
