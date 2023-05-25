@@ -75,7 +75,7 @@ fun startingScreen(
             */
             item {
                 val lastIndex = batterry.BatterryRobot?.lastOrNull()
-                lastIndex?.let { StatusRobot(battery = it) }
+                lastIndex?.let { StatusRobot(battery = it, navController) }
             }
             item {
                 val lastIndex = barometric.Barometric?.lastOrNull()
