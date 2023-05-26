@@ -41,6 +41,7 @@ import com.kubyapp.agrokuby.presentation.home_screen.navigationbar.DrawerHeader
 import com.kubyapp.agrokuby.presentation.home_screen.navigationbar.Items_menu
 import com.kubyapp.agrokuby.presentation.home_screen.navigationbar.MenuItem
 import com.kubyapp.agrokuby.presentation.home_screen.navigationbar.bar_view.NavegacionHost
+import com.kubyapp.agrokuby.ui.theme.gray100
 import com.kubyapp.agrokuby.ui.theme.gray300
 import kotlinx.coroutines.launch
 
@@ -143,7 +144,7 @@ fun HomeScreen(
                                     navController.navigate(Screens.SignInScreen.route)
                                 }, modifier = Modifier
                                     .align(Alignment.End)
-                                    .background(gray300),
+                                    .background(Color.White),
                                 expanded = expanded,
                                 onDismissClick = {
                                     expanded = false

@@ -234,12 +234,12 @@ fun CustomBottomNavigation(
                     .weight(1f)
                     .height(70  .dp)
                     .clip(RoundedCornerShape(
-                        topStart = 25.dp,
-                        topEnd = 25.dp,
-                        bottomStart = 25.dp,
-                        bottomEnd = 25.dp
+                        topStart = 30.dp,
+                        topEnd = 30.dp,
+                        bottomStart = 30.dp,
+                        bottomEnd = 30.dp
                     )),
-                backgroundColor = gray600,
+                backgroundColor = Color.Black,
                 elevation = 2.dp
             ) {
                 val currentRoute = currentRouter(navController = navController as NavHostController)

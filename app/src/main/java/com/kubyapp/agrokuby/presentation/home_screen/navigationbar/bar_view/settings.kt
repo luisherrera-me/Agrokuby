@@ -37,8 +37,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.kubyapp.agrokuby.R
 import com.kubyapp.agrokuby.ui.theme.RegularFont
 import com.kubyapp.agrokuby.ui.theme.*
 import kotlinx.coroutines.delay
@@ -58,49 +60,64 @@ fun settings() {
         Spacer(modifier = Modifier.height(24.dp))
 
         Text(
-            text = "Mi cuenta",
+            text = "My account",
             style = MaterialTheme.typography.h6,
             fontWeight = FontWeight.Bold,
             fontFamily = RegularFont,
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
-        Row(
+        Card(
+            onClick = { isPressed = true },
             modifier = Modifier
-                .heightIn(min = 56.dp)
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .height(56.dp)
+                .padding(horizontal = 0.dp, vertical = 0.dp)
+                .scale(if (isPressed) 0.996f else 1f)//Escala
+                .alpha(if (isPressed) 0.98f else 1f)//Opacidad
                 .clickable { },
-            verticalAlignment = Alignment.CenterVertically
+            elevation = if (isPressed) 0.dp else 0.dp, //Modificación de la elevación
+            backgroundColor = Color.White,
+            shape = RoundedCornerShape(20.dp)
         ) {
-            Icon(
-                imageVector = Icons.Default.AccountCircle,
-                contentDescription = "Perfil",
-                tint = MaterialTheme.colors.onSurface.copy(alpha = 0.6f),
-                modifier = Modifier.size(24.dp)
-            )
+            Row(
+                modifier = Modifier
+                    .heightIn(min = 56.dp)
+                    .padding(horizontal = 10.dp, vertical = 0.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_user),
+                    contentDescription = "user information",
+                    tint = Color.Black.copy(alpha = 1f),
+                    modifier = Modifier.size(24.dp)
+                )
 
-            Spacer(modifier = Modifier.width(16.dp))
+                Spacer(modifier = Modifier.width(16.dp))
 
-            Text(
-                text = "Ver mi perfil",
-                style = MaterialTheme.typography.subtitle1,
-                modifier = Modifier.weight(1f),
-                fontFamily = RegularFont
-            )
+                Text(
+                    text = "user information",
+                    style = MaterialTheme.typography.subtitle1,
+                    modifier = Modifier.weight(1f)
+                )
 
-            Icon(
-                imageVector = Icons.Default.ChevronRight,
-                contentDescription = null,
-                tint = MaterialTheme.colors.onSurface.copy(alpha = 0.6f),
-                modifier = Modifier.size(24.dp)
-            )
+                Icon(
+                    imageVector = Icons.Default.ChevronRight,
+                    contentDescription = null,
+                    tint = MaterialTheme.colors.onSurface.copy(alpha = 0.6f),
+                    modifier = Modifier.size(24.dp)
+                )
+            }
         }
+
 
 
 
         Spacer(modifier = Modifier.height(24.dp))
 
         Text(
-            text = "Configuración de la aplicación",
+            text = "application settings",
             style = MaterialTheme.typography.h6,
             fontWeight = FontWeight.Bold,
             color = Color.Black,
@@ -129,16 +146,16 @@ fun settings() {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
-                    imageVector = Icons.Default.Language,
-                    contentDescription = "Idioma",
-                    tint = MaterialTheme.colors.onSurface.copy(alpha = 0.6f),
+                    painter = painterResource(id = R.drawable.ic_globe),
+                    contentDescription = "Language settings",
+                    tint = Color.Black.copy(alpha = 1f),
                     modifier = Modifier.size(24.dp)
                 )
 
                 Spacer(modifier = Modifier.width(16.dp))
 
                 Text(
-                    text = "Configuración de idioma",
+                    text = "Language settings",
                     style = MaterialTheme.typography.subtitle1,
                     modifier = Modifier.weight(1f)
                 )
@@ -152,13 +169,287 @@ fun settings() {
             }
         }
 
-        Divider(
-            color = gray300,
-            thickness = 1.dp,
-            modifier = Modifier.padding(vertical = 16.dp)
+
+        Card(
+            onClick = { isPressed = true },
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .height(56.dp)
+                .padding(horizontal = 0.dp, vertical = 0.dp)
+                .scale(if (isPressed) 0.996f else 1f)//Escala
+                .alpha(if (isPressed) 0.98f else 1f)//Opacidad
+                .clickable { },
+            elevation = if (isPressed) 0.dp else 0.dp, //Modificación de la elevación
+            backgroundColor = Color.White,
+            shape = RoundedCornerShape(20.dp)
+        ) {
+            Row(
+                modifier = Modifier
+                    .heightIn(min = 56.dp)
+                    .padding(horizontal = 10.dp, vertical = 0.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_mobile),
+                    contentDescription = "App permissions",
+                    tint = Color.Black.copy(alpha = 1f),
+                    modifier = Modifier.size(24.dp)
+                )
+
+                Spacer(modifier = Modifier.width(16.dp))
+
+                Text(
+                    text = "App permissions",
+                    style = MaterialTheme.typography.subtitle1,
+                    modifier = Modifier.weight(1f)
+                )
+
+                Icon(
+                    imageVector = Icons.Default.ChevronRight,
+                    contentDescription = null,
+                    tint = MaterialTheme.colors.onSurface.copy(alpha = 0.6f),
+                    modifier = Modifier.size(24.dp)
+                )
+            }
+        }
+
+
+        Card(
+            onClick = { isPressed = true },
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .height(56.dp)
+                .padding(horizontal = 0.dp, vertical = 0.dp)
+                .scale(if (isPressed) 0.996f else 1f)//Escala
+                .alpha(if (isPressed) 0.98f else 1f)//Opacidad
+                .clickable { },
+            elevation = if (isPressed) 0.dp else 0.dp, //Modificación de la elevación
+            backgroundColor = Color.White,
+            shape = RoundedCornerShape(20.dp)
+        ) {
+            Row(
+                modifier = Modifier
+                    .heightIn(min = 56.dp)
+                    .padding(horizontal = 10.dp, vertical = 0.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_brackets),
+                    contentDescription = "routine programming",
+                    tint = Color.Black.copy(alpha = 1f),
+                    modifier = Modifier.size(24.dp)
+                )
+
+                Spacer(modifier = Modifier.width(16.dp))
+
+                Text(
+                    text = "Routine programming",
+                    style = MaterialTheme.typography.subtitle1,
+                    modifier = Modifier.weight(1f)
+                )
+
+                Icon(
+                    imageVector = Icons.Default.ChevronRight,
+                    contentDescription = null,
+                    tint = MaterialTheme.colors.onSurface.copy(alpha = 0.6f),
+                    modifier = Modifier.size(24.dp)
+                )
+            }
+        }
+        Card(
+            onClick = { isPressed = true },
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .height(56.dp)
+                .padding(horizontal = 0.dp, vertical = 0.dp)
+                .scale(if (isPressed) 0.996f else 1f)//Escala
+                .alpha(if (isPressed) 0.98f else 1f)//Opacidad
+                .clickable { },
+            elevation = if (isPressed) 0.dp else 0.dp, //Modificación de la elevación
+            backgroundColor = Color.White,
+            shape = RoundedCornerShape(20.dp)
+        ) {
+            Row(
+                modifier = Modifier
+                    .heightIn(min = 56.dp)
+                    .padding(horizontal = 10.dp, vertical = 0.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_notifications),
+                    contentDescription = "notifications",
+                    tint = Color.Black.copy(alpha = 1f),
+                    modifier = Modifier.size(24.dp)
+                )
+
+                Spacer(modifier = Modifier.width(16.dp))
+
+                Text(
+                    text = "Notifications",
+                    style = MaterialTheme.typography.subtitle1,
+                    modifier = Modifier.weight(1f)
+                )
+
+                Icon(
+                    imageVector = Icons.Default.ChevronRight,
+                    contentDescription = null,
+                    tint = MaterialTheme.colors.onSurface.copy(alpha = 0.6f),
+                    modifier = Modifier.size(24.dp)
+                )
+            }
+        }
+
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        Text(
+            text = "Help me",
+            style = MaterialTheme.typography.h6,
+            fontWeight = FontWeight.Bold,
+            color = Color.Black,
+            fontFamily = RegularFont,
+            modifier = Modifier.padding(bottom = 16.dp)
         )
 
+        Card(
+            onClick = { isPressed = true },
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .height(56.dp)
+                .padding(horizontal = 0.dp, vertical = 0.dp)
+                .scale(if (isPressed) 0.996f else 1f)//Escala
+                .alpha(if (isPressed) 0.98f else 1f)//Opacidad
+                .clickable { },
+            elevation = if (isPressed) 0.dp else 0.dp, //Modificación de la elevación
+            backgroundColor = Color.White,
+            shape = RoundedCornerShape(20.dp)
+        ) {
+            Row(
+                modifier = Modifier
+                    .heightIn(min = 56.dp)
+                    .padding(horizontal = 10.dp, vertical = 0.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_chat),
+                    contentDescription = "customer service",
+                    tint = Color.Black.copy(alpha = 1f),
+                    modifier = Modifier.size(24.dp)
+                )
 
+                Spacer(modifier = Modifier.width(16.dp))
+
+                Text(
+                    text = "Customer service",
+                    style = MaterialTheme.typography.subtitle1,
+                    modifier = Modifier.weight(1f)
+                )
+
+                Icon(
+                    imageVector = Icons.Default.ChevronRight,
+                    contentDescription = null,
+                    tint = MaterialTheme.colors.onSurface.copy(alpha = 0.6f),
+                    modifier = Modifier.size(24.dp)
+                )
+            }
+        }
+
+
+        Card(
+            onClick = { isPressed = true },
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .height(56.dp)
+                .padding(horizontal = 0.dp, vertical = 0.dp)
+                .scale(if (isPressed) 0.996f else 1f)//Escala
+                .alpha(if (isPressed) 0.98f else 1f)//Opacidad
+                .clickable { },
+            elevation = if (isPressed) 0.dp else 0.dp, //Modificación de la elevación
+            backgroundColor = Color.White,
+            shape = RoundedCornerShape(20.dp)
+        ) {
+            Row(
+                modifier = Modifier
+                    .heightIn(min = 56.dp)
+                    .padding(horizontal = 10.dp, vertical = 0.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_users),
+                    contentDescription = "Community & forums",
+                    tint = Color.Black.copy(alpha = 1f),
+                    modifier = Modifier.size(24.dp)
+                )
+
+                Spacer(modifier = Modifier.width(16.dp))
+
+                Text(
+                    text = "Community & forums",
+                    style = MaterialTheme.typography.subtitle1,
+                    modifier = Modifier.weight(1f)
+                )
+
+                Icon(
+                    imageVector = Icons.Default.ChevronRight,
+                    contentDescription = null,
+                    tint = MaterialTheme.colors.onSurface.copy(alpha = 0.6f),
+                    modifier = Modifier.size(24.dp)
+                )
+            }
+        }
+
+
+        Card(
+            onClick = { isPressed = true },
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .height(56.dp)
+                .padding(horizontal = 0.dp, vertical = 0.dp)
+                .scale(if (isPressed) 0.996f else 1f)//Escala
+                .alpha(if (isPressed) 0.98f else 1f)//Opacidad
+                .clickable { },
+            elevation = if (isPressed) 0.dp else 0.dp, //Modificación de la elevación
+            backgroundColor = Color.White,
+            shape = RoundedCornerShape(20.dp)
+        ) {
+            Row(
+                modifier = Modifier
+                    .heightIn(min = 56.dp)
+                    .padding(horizontal = 10.dp, vertical = 0.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_notebook),
+                    contentDescription = "Documentacion",
+                    tint = Color.Black.copy(alpha = 1f),
+                    modifier = Modifier.size(24.dp)
+                )
+
+                Spacer(modifier = Modifier.width(16.dp))
+
+                Text(
+                    text = "Documentation",
+                    style = MaterialTheme.typography.subtitle1,
+                    modifier = Modifier.weight(1f)
+                )
+
+                Icon(
+                    imageVector = Icons.Default.ChevronRight,
+                    contentDescription = null,
+                    tint = MaterialTheme.colors.onSurface.copy(alpha = 0.6f),
+                    modifier = Modifier.size(24.dp)
+                )
+            }
+        }
+
+
+        Spacer(modifier = Modifier.height(104.dp))
         LaunchedEffect(isPressed) {
             if (isPressed) {
                 delay(400)

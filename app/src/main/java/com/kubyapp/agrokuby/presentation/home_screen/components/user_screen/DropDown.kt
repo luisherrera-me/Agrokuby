@@ -32,6 +32,7 @@ import com.kubyapp.agrokuby.ui.theme.ORANGE_LIGHT
 import com.kubyapp.agrokuby.ui.theme.RegularFont
 import com.kubyapp.agrokuby.ui.theme.TEAL_LIGHT
 import com.kubyapp.agrokuby.ui.theme.gray100
+import com.kubyapp.agrokuby.ui.theme.gray400
 import com.kubyapp.agrokuby.ui.theme.lightRed
 
 @Composable
@@ -70,7 +71,7 @@ fun DropDown(
                 )
 
                 Divider(
-                    color = gray100,
+                    color = gray400,
                     thickness = 1.dp,
                     modifier = Modifier.padding(vertical = 8.dp)
                 )
@@ -83,14 +84,15 @@ fun DropDown(
                 ) {
                     Row() {
                         Icon(
-                            painter = painterResource(id = R.drawable.account_circle),
+                            painter = painterResource(id = R.drawable.ic_user),
                             contentDescription = "Mi Perfil",
-                            modifier = Modifier.size(20.dp),
+                            modifier = Modifier.size(25.dp),
                             tint = TEAL_LIGHT
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text("Mi Perfil",
                             fontFamily = RegularFont,
+                            fontWeight = FontWeight.Medium,
                             textAlign = TextAlign.Center)
                     }
                 }
@@ -102,19 +104,20 @@ fun DropDown(
                 ) {
                     Row() {
                         Icon(
-                            painter = painterResource(id = R.drawable.help),
+                            painter = painterResource(id = R.drawable.ic_help),
                             contentDescription = "Ayuda",
-                            modifier = Modifier.size(20.dp),
+                            modifier = Modifier.size(25.dp),
                             tint = ORANGE_LIGHT
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text("Ayuda",
                             fontFamily = RegularFont,
+                            fontWeight = FontWeight.Medium,
                             textAlign = TextAlign.Center)
                     }
                 }
                 Divider(
-                    color = gray100,
+                    color = gray400,
                     thickness = 1.dp,
                     modifier = Modifier.padding(vertical = 8.dp)
                 )
@@ -124,13 +127,14 @@ fun DropDown(
                 ) {
                     Row() {
                         Icon(
-                            painter = painterResource(id = R.drawable.logout),
+                            painter = painterResource(id = R.drawable.ic_sign_in),
                             contentDescription = "Cerrar sesión",
-                            modifier = Modifier.size(20.dp),
+                            modifier = Modifier.size(25.dp),
                             tint = lightRed
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text("Cerrar sesión",
+                            fontWeight = FontWeight.Medium,
                             fontFamily = RegularFont,
                             textAlign = TextAlign.Center)
                     }

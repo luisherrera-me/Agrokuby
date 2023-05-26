@@ -173,7 +173,7 @@ fun LightnessDataHolder(
         if (isPressed) {
             delay(400)
             isPressed = false
-            navController.navigate(Screens.ChartScreen.route)
+            //navController.navigate(Screens.ChartScreen.route)
         }
     }
 }

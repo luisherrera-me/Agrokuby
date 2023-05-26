@@ -13,13 +13,13 @@ sealed class Items_menu (
     val iconColor: Color
         ){
     object Pantallas1: Items_menu(
-        R.drawable.ic_settings_menu,
+        R.drawable.settings,
         "Setting",
         "pantalla1",
         AzulCielo)
 
     object Pantallas3: Items_menu(
-        R.drawable.ic_psychiatry_menu,
+        R.drawable.ic_psychiatry,
         "Plant", "pantalla2",
          psycriatryColor)
 

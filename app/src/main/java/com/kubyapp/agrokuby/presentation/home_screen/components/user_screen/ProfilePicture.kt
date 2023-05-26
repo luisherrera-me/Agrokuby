@@ -28,7 +28,7 @@ fun ProfilePicture(
     IconButton(onClick = onExpandChange) {
         if (userInfo.photoUser.isNullOrEmpty()) {
             Icon(
-                painter = painterResource(id = R.drawable.account_circle),
+                painter = painterResource(id = R.drawable.ic_user),
                 contentDescription = "",
                 modifier = Modifier
                     .size(40.dp)
