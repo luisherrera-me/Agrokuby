@@ -27,4 +27,9 @@ sealed class Items_menu (
         R.drawable.ic_home,
         "Home", "pantalla3",
         AmarilloSuave)
+
+    object userInformation: Items_menu(
+        R.drawable.ic_user,
+        "UserInformation", "pantalla4",
+        AmarilloSuave)
 }

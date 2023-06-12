@@ -6,6 +6,7 @@ sealed class Screens(val route: String) {
     object HomeScreen : Screens(route = "Home_Screen")
     object SplashScreen : Screens(route = "Splash_Screen")
     object ChartScreen : Screens(route = "Chart_Screen")
-    object InfoRobotScreen : Screens(route = "InfoRobot_Scree")
+    object InfoRobotScreen : Screens(route = "InfoRobot_Screen")
+    object UserInformation : Screens(route = "UserInformation_Screen")
 
 }

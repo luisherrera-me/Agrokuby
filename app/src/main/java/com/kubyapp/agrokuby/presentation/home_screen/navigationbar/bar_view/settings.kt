@@ -40,14 +40,21 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.kubyapp.agrokuby.R
+import com.kubyapp.agrokuby.navigation.Screens
+import com.kubyapp.agrokuby.presentation.login_screen.SignInViewModel
 import com.kubyapp.agrokuby.ui.theme.RegularFont
 import com.kubyapp.agrokuby.ui.theme.*
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun settings() {
+fun settings(
+    navController: NavController,
+    viewModel: SignInViewModel = hiltViewModel()
+) {
     val scrollState = rememberScrollState()
     var isPressed by remember { mutableStateOf(false) }
 
@@ -405,7 +412,8 @@ fun settings() {
 
 
         Card(
-            onClick = { isPressed = true },
+            onClick = { isPressed = true
+                      },
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
@@ -454,6 +462,7 @@ fun settings() {
             if (isPressed) {
                 delay(400)
                 isPressed = false
+                navController.navigate(Screens.UserInformation.route)
             }
         }
 

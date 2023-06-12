@@ -25,9 +25,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.google.common.io.Files.append
 import com.kubyapp.agrokuby.R
 import com.kubyapp.agrokuby.data.model.user.UserInfo
+import com.kubyapp.agrokuby.navigation.Screens
 import com.kubyapp.agrokuby.ui.theme.ORANGE_LIGHT
 import com.kubyapp.agrokuby.ui.theme.RegularFont
 import com.kubyapp.agrokuby.ui.theme.TEAL_LIGHT
@@ -41,6 +43,7 @@ fun DropDown(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     expanded:Boolean,
+    navController: NavHostController,
     onDismissClick: () -> Unit
 ) {
     DropdownMenu(
@@ -98,7 +101,7 @@ fun DropDown(
                 }
                 DropdownMenuItem(
                     onClick = {
-                        // Acción para recibir ayuda
+                        navController.navigate(Screens.SplashScreen.route)
                     },
                     modifier = Modifier.padding(vertical = 0.dp)
                 ) {
@@ -122,7 +125,7 @@ fun DropDown(
                     modifier = Modifier.padding(vertical = 8.dp)
                 )
                 DropdownMenuItem(
-                    onClick = onClick,
+                    onClick = {navController.navigate(Screens.SplashScreen.route) },
                     modifier = Modifier.padding(vertical = 0.dp)
                 ) {
                     Row() {

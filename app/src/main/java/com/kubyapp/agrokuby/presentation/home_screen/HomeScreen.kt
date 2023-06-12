@@ -141,10 +141,11 @@ fun HomeScreen(
                                 userInfo = it, onClick = {
                                     viewModel.signOut()
                                     navController.popBackStack()
-                                    navController.navigate(Screens.SignInScreen.route)
+                                    //navController.navigate(Screens.SplashScreen.route)
                                 }, modifier = Modifier
                                     .align(Alignment.End)
                                     .background(Color.White),
+                                navController = navController,
                                 expanded = expanded,
                                 onDismissClick = {
                                     expanded = false
