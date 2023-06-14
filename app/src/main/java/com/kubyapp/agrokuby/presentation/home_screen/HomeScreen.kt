@@ -122,8 +122,7 @@ fun HomeScreen(
                                 .size(150.dp)
                         )
                     }
-
-                    Column(
+                      Column(
                         modifier = Modifier
                             .fillMaxHeight()
                             .width(40.dp),
