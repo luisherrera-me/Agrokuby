@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 
 
 import com.google.firebase.auth.AuthCredential
-import com.kubyapp.agrokuby.data.AuthRepository
+import com.kubyapp.domain.repository.AuthRepository
 import com.kubyapp.agrokuby.presentation.login_screen.GoogleSignInState
 import com.kubyapp.agrokuby.presentation.login_screen.SignInState
 import com.kubyapp.agrokuby.util.Resource
@@ -46,11 +46,11 @@ class SignUpViewModel @Inject constructor(
         }
     }
 
-    fun registerUser(email:String, password:String) = viewModelScope.launch {
-        repository.registerUser(email, password).collect{result ->
+    fun registerUser(email:String, password:String,username:String) = viewModelScope.launch {
+        repository.registerUser(email, password,username).collect{result ->
             when(result){
                 is Resource.Success ->{
-                    _signInState.send(SignInState(isSuccess = "Sign Up Success"))
+                    _signInState.send(SignInState(isSuccess = "Regístrese con éxito"))
                 }
                 is Resource.Loading ->{
                     _signInState.send(SignInState(isLoading = true))

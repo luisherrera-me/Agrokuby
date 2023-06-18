@@ -1,9 +1,14 @@
 package com.kubyapp.agrokuby.di
 
 
-import com.kubyapp.agrokuby.data.AuthRepository
-import com.kubyapp.agrokuby.data.AuthRepositoryImpl
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import com.kubyapp.agrokuby.data.repository.AuthRepositoryImpl
+import com.kubyapp.agrokuby.data.repository.SensorsRepositoryImpl
+import com.kubyapp.domain.repository.AuthRepository
+import com.kubyapp.domain.repository.SensorsRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,7 +25,16 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providesRepositoryImpl(firebaseAuth: FirebaseAuth): AuthRepository {
-        return AuthRepositoryImpl(firebaseAuth)
+    fun providesRepositoryImpl(firebaseAuth: FirebaseAuth, firestore :FirebaseFirestore): AuthRepository {
+        return AuthRepositoryImpl(firebaseAuth,firestore)
     }
+
+    @Provides
+    @Singleton
+    fun providesSensorRepositoryImpl(firebaseAuth: FirebaseAuth, firestore :FirebaseFirestore): SensorsRepository {
+        return SensorsRepositoryImpl()
+    }
+    @Provides
+    @Singleton
+    fun providesFireStore() = Firebase.firestore
 }

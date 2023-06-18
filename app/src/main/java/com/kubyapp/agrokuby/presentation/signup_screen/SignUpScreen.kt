@@ -6,20 +6,46 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.Text
+import androidx.compose.material.TextField
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.VerifiedUser
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material.icons.outlined.Visibility
 import androidx.compose.material.icons.outlined.VisibilityOff
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.blur
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -65,6 +91,7 @@ fun SignUpScreen(
                 print(it)
             }
         }
+    var username by rememberSaveable{mutableStateOf("")}
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     val scope = rememberCoroutineScope()
@@ -77,6 +104,7 @@ fun SignUpScreen(
     Image(
         painter = painterResource(id = R.drawable.fondo),
         contentDescription = "Imagen",
+        modifier = Modifier.alpha(0.1f),
         contentScale = ContentScale.Crop
     )
 
@@ -117,6 +145,38 @@ fun SignUpScreen(
             fontSize = 15.sp, color = Color.Gray,
             fontFamily = RegularFont,
         )
+        TextField(
+            modifier = Modifier.fillMaxWidth(),
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.AccountCircle,
+                    contentDescription = "User Icon"
+                )
+            },
+            value = username,
+            colors = TextFieldDefaults.textFieldColors(
+                backgroundColor = lightBlue,
+                cursorColor = Color.Black,
+                disabledLabelColor = blue,
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+            ),
+            onValueChange = {
+                username = it
+            },
+            textStyle = TextStyle(fontFamily = customFont),
+            keyboardOptions = KeyboardOptions.Default.copy(
+                keyboardType = KeyboardType.Text
+            ),
+            shape = RoundedCornerShape(8.dp),
+            singleLine = true,
+            placeholder = {
+                Text(text = "Username")
+            }
+        )
+        //text input separator
+        Spacer(modifier = Modifier.height(16.dp))
+
         TextField(
             modifier = Modifier.fillMaxWidth(),
             leadingIcon = {
@@ -186,12 +246,10 @@ fun SignUpScreen(
             }
         )
 
-
-
         Button(
             onClick = {
                 scope.launch {
-                    viewModel.registerUser(email, password)
+                    viewModel.registerUser(email, password, username)
                 }
             },
             modifier = Modifier
@@ -263,7 +321,7 @@ fun SignUpScreen(
 
             }) {
                 Icon(
-                    modifier = Modifier.size(52.dp),
+                    modifier = Modifier.size(50.dp),
                     painter = painterResource(id = R.drawable.ic_facebook),
                     contentDescription = "Google Icon", tint = Color.Unspecified
                 )
@@ -280,9 +338,12 @@ fun SignUpScreen(
             painter = painterResource(id = R.drawable.by),
             contentDescription = "Agro Kuby",
             contentScale = ContentScale.Inside,
-            modifier = Modifier.size(200.dp)
+
+            modifier = Modifier
+
+                .size(200.dp)
                 //.aspectRatio(16f/9f)
-                .padding(0.dp, 50.dp, 0.dp, 0.dp)
+                .padding(0.dp, 0.dp, 0.dp, 0.dp)
                 .fillMaxWidth()
         )
     }
@@ -292,6 +353,7 @@ fun SignUpScreen(
             if (state.value?.isSuccess?.isNotEmpty() == true) {
                 val success = state.value?.isSuccess
                 Toast.makeText(context, "$success", Toast.LENGTH_LONG).show()
+                navController.navigate(Screens.SignInScreen.route)
             }
         }
     }
@@ -299,6 +361,7 @@ fun SignUpScreen(
         scope.launch {
             if (googleSignInState.success != null) {
                 Toast.makeText(context, "Sign In Success", Toast.LENGTH_LONG).show()
+                navController.navigate(Screens.SignInScreen.route)
             }
         }
     }
