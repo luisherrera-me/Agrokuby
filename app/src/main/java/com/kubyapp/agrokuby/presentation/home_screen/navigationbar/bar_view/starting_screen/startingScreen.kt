@@ -24,13 +24,14 @@ import com.kubyapp.agrokuby.presentation.home_screen.HomeViewModel
 import com.kubyapp.agrokuby.presentation.home_screen.components.BarometricData.BarometricDataHolder
 import com.kubyapp.agrokuby.presentation.home_screen.components.BarometricData.BarometricViewModel
 import com.kubyapp.agrokuby.presentation.home_screen.components.MositureDataHolder
+import com.kubyapp.agrokuby.presentation.home_screen.components.Robot_screen.SensSwitch
 import com.kubyapp.agrokuby.presentation.home_screen.components.StatusRobot
 import com.kubyapp.agrokuby.presentation.home_screen.components.TempDataHolder
 import com.kubyapp.agrokuby.presentation.home_screen.components.lightness_screen.LightnessDataHolder
 import com.kubyapp.agrokuby.presentation.home_screen.components.lightness_screen.LightnessViewModel
 import com.kubyapp.agrokuby.presentation.home_screen.components.temperature_screen.TemperatureViewModel
 import com.kubyapp.agrokuby.presentation.home_screen.components.user_screen.UserViewModel
-import com.kubyapp.agrokuby.ui.theme.backgroundColor
+import com.kubyapp.domain.repository.StatusRobot
 
 
 @Composable
@@ -49,19 +50,14 @@ fun startingScreen(
     barometricViewModel: BarometricViewModel = hiltViewModel(),
     navController: NavHostController
 ){
-    val lightness by lightnessViewModel.getLightness.collectAsState()
-    val batterry by viewModel.getRobotStatus.collectAsState()
-    val soil by temperatureViewModel.getTemperatureState.collectAsState()
-    val user by userData.UserStatus.collectAsState()
-    val barometric by barometricViewModel.getBarometricState.collectAsState()
+    // Crear estados para almacenar los datos obtenidos de Firebase
+    val lightnessState by lightnessViewModel.getLightness.collectAsState()
+    val batteryState by viewModel.getRobotStatus.collectAsState()
+    val widgetRobotState by viewModel.getWidgetRobot.collectAsState()
+    val soilState by temperatureViewModel.getTemperatureState.collectAsState()
+    val userState by userData.UserStatus.collectAsState()
+    val barometricState by barometricViewModel.getBarometricState.collectAsState()
     var expanded by remember { mutableStateOf(false) }
-
-    Log.d("TAG", "HomeScreen: ${barometric.Barometric}")
-    Log.d("TAG", "HomeScreen: ${lightness.lightNess}")
-    Log.d("TAG", "HomeScreen: ${soil.temperature}")
-    Log.d("TAG", "HomeScreen: ${user.User}")
-    Log.d("TAG", "HomeScreen: ${batterry.BatterryRobot}")
-
 
     Column(
         modifier = Modifier
@@ -69,35 +65,35 @@ fun startingScreen(
             .background(Color.White)
     ) {
         LazyColumn(modifier = Modifier.fillMaxSize()) {
-            /*
             item {
-                user.User?.let { it1 -> UserScreen(userInfo = it1) }
-            }
-            */
-            item {
-                val lastIndex = batterry.BatterryRobot?.lastOrNull()
+                val lastIndex = batteryState.BatterryRobot?.lastOrNull()
                 lastIndex?.let { StatusRobot(battery = it, navController) }
             }
             item {
-                val lastIndex = barometric.Barometric?.lastOrNull()
+                val lastIndex = widgetRobotState.WidgetRobot?.lastOrNull()
+                lastIndex?.let { SensSwitch(Widget = it) }
+            }
+            item {
+                val lastIndex = barometricState.Barometric?.lastOrNull()
                 lastIndex?.let { BarometricDataHolder(barometric = it) }
             }
             item {
-                val lastIndex = lightness.lightNess?.lastOrNull()
+                val lastIndex = lightnessState.lightNess?.lastOrNull()
                 lastIndex?.let {
                     LightnessDataHolder(lightNess = it, navController = navController)
                 }
             }
             item {
-                val lastIndex = soil.temperature?.lastOrNull()
+                val lastIndex = soilState.temperature?.lastOrNull()
                 lastIndex?.let { TempDataHolder(soil = it) }
             }
             item {
-                val lastIndex = soil.temperature?.lastOrNull()
+                val lastIndex = soilState.temperature?.lastOrNull()
                 lastIndex?.let { MositureDataHolder(soil = it) }
                 Spacer(modifier = Modifier.height(110.dp))
             }
         }
     }
+
 
 }

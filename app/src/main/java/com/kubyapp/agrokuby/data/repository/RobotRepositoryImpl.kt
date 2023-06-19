@@ -6,6 +6,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.kubyapp.agrokuby.util.Resource
 import com.kubyapp.agrokuby.data.model.RobotStatus.BatterryRobot
+import com.kubyapp.agrokuby.data.model.RobotStatus.WidgetRobot
 import com.kubyapp.domain.repository.StatusRobot
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -18,6 +19,7 @@ class RobotRepositoryImpl @Inject constructor(
         .document("17807108")
         .collection("Battery")
         .document("Data")
+
 
     override suspend fun getBattery(): Flow<Resource<List<BatterryRobot>>> = flow {
          try {
@@ -35,8 +37,33 @@ class RobotRepositoryImpl @Inject constructor(
         }
     }
 
+    private val widgetStatus = Firebase.firestore
+        .collection("Robots")
+        .document("17807108")
+        .collection("parameters")
+        .document("Data")
+    override suspend fun getWidget(): Flow<Resource<List<WidgetRobot>>> = flow addSnapshotListener@{
+        try {
+            emit(Resource.Loading())
 
+            val documentSnapshot = widgetStatus.get().await()
 
+            val widgetRobot = documentSnapshot.toObject(WidgetRobot::class.java)
+            Log.d("Repository", "BatterryRobot data: $widgetRobot")
+
+            if (widgetRobot != null) {
+                emit(Resource.Success(listOf(widgetRobot)))
+                return@addSnapshotListener
+            } else {
+                emit(Resource.Error("BatterryRobot data not found"))
+            }
+        } catch (e: FirebaseFirestoreException) {
+            emit(Resource.Error(e.message.toString()))
+        }
+    }
 
 }
+
+
+
 

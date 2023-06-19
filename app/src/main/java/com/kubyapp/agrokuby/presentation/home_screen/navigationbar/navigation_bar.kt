@@ -232,12 +232,12 @@ fun CustomBottomNavigation(
             BottomNavigation(
                 modifier = Modifier
                     .weight(1f)
-                    .height(70  .dp)
+                    .height(65.dp)
                     .clip(RoundedCornerShape(
-                        topStart = 30.dp,
-                        topEnd = 30.dp,
-                        bottomStart = 30.dp,
-                        bottomEnd = 30.dp
+                        topStart = 40.dp,
+                        topEnd = 40.dp,
+                        bottomStart = 40.dp,
+                        bottomEnd = 40.dp
                     )),
                 backgroundColor = Color.Black,
                 elevation = 2.dp

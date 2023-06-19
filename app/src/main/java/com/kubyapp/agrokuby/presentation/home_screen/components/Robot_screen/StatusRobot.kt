@@ -1,8 +1,11 @@
 package com.kubyapp.agrokuby.presentation.home_screen.components
 
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,20 +22,25 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Done
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -40,33 +48,34 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.kubyapp.agrokuby.R
-import com.kubyapp.agrokuby.data.model.RobotStatus.BatterryRobot
-import com.kubyapp.agrokuby.navigation.Screens
-import com.kubyapp.agrokuby.presentation.home_screen.navigationbar.CustomBottomNavigation
-import com.kubyapp.agrokuby.presentation.home_screen.navigationbar.bar_view.NavegacionHost
+import com.kubyapp.agrokuby.data.model.RobotStatus.*
+import com.kubyapp.agrokuby.presentation.home_screen.HomeViewModel
 import com.kubyapp.agrokuby.ui.theme.BatteryFull
 import com.kubyapp.agrokuby.ui.theme.ORANGE_LIGHT
 import com.kubyapp.agrokuby.ui.theme.RegularFont
-import com.kubyapp.agrokuby.ui.theme.TempPulple
 import com.kubyapp.agrokuby.ui.theme.lightBlue
 import com.kubyapp.agrokuby.ui.theme.lightRed
 import kotlinx.coroutines.delay
+
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun StatusRobot(
     battery: BatterryRobot,
-    navController: NavHostController
+    navController: NavHostController,
+    viewModel: HomeViewModel = hiltViewModel(),
 ) {
     var isPressed by remember { mutableStateOf(false) }
-
+    val widgetRobot by viewModel.getWidgetRobot.collectAsState()
     Text(
-        modifier = Modifier.padding(top = 10.dp, start = 35.dp, end = 35.dp ),
+        modifier = Modifier.padding(top = 10.dp, start = 35.dp, end = 35.dp),
         text = "information for the robot",
         fontWeight = FontWeight.Medium,
         fontSize = 16.sp,
@@ -84,9 +93,9 @@ fun StatusRobot(
             .alpha(if (isPressed) 0.98f else 1f),//Opacidad
         elevation = if (isPressed) 0.dp else 5.dp, //Modificación de la elevación
         backgroundColor = Color.White,
-        onClick = {isPressed = true},
+        onClick = { isPressed = true },
         shape = RoundedCornerShape(20.dp)
-    ){
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxSize()
@@ -99,9 +108,9 @@ fun StatusRobot(
                     .padding(horizontal = 10.dp),
                 horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.CenterVertically
-            )  {
+            ) {
                 IconButton(onClick = { /* acción */ }) {
-                    val batteryPercentage  = battery.BatteryCapacity
+                    val batteryPercentage = battery.BatteryCapacity
                     val batteryColor = when {
 
                         battery.BatteryCharging -> ORANGE_LIGHT
@@ -140,7 +149,7 @@ fun StatusRobot(
                             modifier = Modifier.size(35.dp)
                         )
                     }
-            }
+                }
                 Spacer(modifier = Modifier.width(16.dp))
                 Column {
                     Text(
@@ -213,6 +222,7 @@ fun StatusRobot(
             }
         }
     }
-
 }
+
+
 

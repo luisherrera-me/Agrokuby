@@ -2,6 +2,11 @@ package com.kubyapp.agrokuby.presentation.home_screen
 
 import android.annotation.SuppressLint
 import android.util.Log
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -10,7 +15,6 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -31,7 +35,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.kubyapp.agrokuby.R
-import com.kubyapp.agrokuby.navigation.Screens
 import com.kubyapp.agrokuby.presentation.home_screen.components.user_screen.DropDown
 import com.kubyapp.agrokuby.presentation.home_screen.components.user_screen.ProfilePicture
 import com.kubyapp.agrokuby.presentation.home_screen.components.user_screen.UserViewModel
@@ -41,8 +44,6 @@ import com.kubyapp.agrokuby.presentation.home_screen.navigationbar.DrawerHeader
 import com.kubyapp.agrokuby.presentation.home_screen.navigationbar.Items_menu
 import com.kubyapp.agrokuby.presentation.home_screen.navigationbar.MenuItem
 import com.kubyapp.agrokuby.presentation.home_screen.navigationbar.bar_view.NavegacionHost
-import com.kubyapp.agrokuby.ui.theme.gray100
-import com.kubyapp.agrokuby.ui.theme.gray300
 import kotlinx.coroutines.launch
 
 
@@ -77,9 +78,28 @@ fun HomeScreen(
     var expanded by remember { mutableStateOf(false) }
 
     Log.d("TAG", "HomeScreen: ${user.User}")
-
     val scaffoldState = rememberScaffoldState()
+    val isDrawerOpen = scaffoldState.drawerState.isOpen
 
+    val transition = updateTransition(targetState = isDrawerOpen, label = "iconTransition")
+
+    val iconRotation by transition.animateFloat(
+        transitionSpec = {
+            if (false isTransitioningTo true) {
+                spring(stiffness = Spring.StiffnessLow)
+            } else {
+                tween(durationMillis = 50000)
+            }
+        }, label = ""
+    ) { isOpen ->
+        if (isOpen) 10000f else 10000f
+    }
+
+    val icon = if (isDrawerOpen) {
+        painterResource(R.drawable.ic_feed_s)
+    } else {
+        painterResource(R.drawable.ic_feed)
+    }
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -100,9 +120,9 @@ fun HomeScreen(
                         }
                     }) {
                         Icon(
-                            Icons.Filled.Menu,
+                            painter = icon,
                             contentDescription = "Navegar hacia atrás",
-                            modifier = Modifier.size(36.dp)
+                            modifier = Modifier.size(30.dp)
                         )
                     }
                 },
