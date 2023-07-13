@@ -104,7 +104,7 @@ fun UserScreen(
                     contentAlignment = Alignment.Center
                 ) {
                     Image(
-                        imageVector = ImageVector.vectorResource(id = R.drawable.sun),
+                        imageVector = ImageVector.vectorResource(id = R.drawable.ic_sun),
                         contentDescription = "Play Icon",
                         modifier = Modifier.size(40.dp)
                     )

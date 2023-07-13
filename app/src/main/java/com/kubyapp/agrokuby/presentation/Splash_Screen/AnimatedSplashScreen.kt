@@ -38,7 +38,7 @@ fun AnimatedSplashScreen(
     val alphaAnim = animateFloatAsState(
         targetValue = if (startAnimation) 5f else 5f,
         animationSpec = tween(
-            durationMillis = 500
+            durationMillis = 2500
         )
     )
 

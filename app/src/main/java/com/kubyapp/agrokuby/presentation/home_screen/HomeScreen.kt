@@ -31,10 +31,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.kubyapp.agrokuby.R
+import com.kubyapp.agrokuby.navigation.Screens
 import com.kubyapp.agrokuby.presentation.home_screen.components.user_screen.DropDown
 import com.kubyapp.agrokuby.presentation.home_screen.components.user_screen.ProfilePicture
 import com.kubyapp.agrokuby.presentation.home_screen.components.user_screen.UserViewModel
@@ -58,7 +60,7 @@ fun currentRouter(navController: NavHostController): String? {
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     userData: UserViewModel = hiltViewModel(),
-    navController: NavHostController
+    navController: NavController,
 ) {
 
 

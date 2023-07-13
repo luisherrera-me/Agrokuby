@@ -19,8 +19,8 @@ class SensorsRepositoryImpl @Inject constructor(
 ) : SensorsRepository {
     private val lightnessRef = Firebase.firestore
         .collection("sensors")
-        .document("brightness")
-        .collection("liveLux")
+        .document("10000000f14b5650")
+        .collection("light_sensor")
 
     override suspend fun getLightness(): Resource<List<LightNess>> {
         val result: List<LightNess>
@@ -38,8 +38,8 @@ class SensorsRepositoryImpl @Inject constructor(
     }
     private val soilRef = Firebase.firestore
         .collection("sensors")
-        .document("soilQuality")
-        .collection("liveSoil")
+        .document("10000000f14b5650")
+        .collection("soil_sensor")
 
     override suspend fun getSoilQuality(): Resource<List<Soil>> {
         val result: List<Soil>
@@ -55,8 +55,8 @@ class SensorsRepositoryImpl @Inject constructor(
     }
     private val darometricRef = Firebase.firestore
         .collection("sensors")
-        .document("barometric")
-        .collection("Barometric")
+        .document("10000000f14b5650")
+        .collection("barometric_sensor")
     override suspend fun getBarometric(): Resource<List<Barometric>>{
         val result : List<Barometric>
         return try {

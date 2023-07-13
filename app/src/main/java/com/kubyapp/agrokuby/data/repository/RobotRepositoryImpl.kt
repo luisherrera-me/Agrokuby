@@ -16,7 +16,7 @@ class RobotRepositoryImpl @Inject constructor(
 ): StatusRobot {
     private val batterryStatus = Firebase.firestore
         .collection("Robots")
-        .document("17807108")
+        .document("10000000f14b5650")
         .collection("Battery")
         .document("Data")
 
@@ -39,7 +39,7 @@ class RobotRepositoryImpl @Inject constructor(
 
     private val widgetStatus = Firebase.firestore
         .collection("Robots")
-        .document("17807108")
+        .document("10000000f14b5650")
         .collection("parameters")
         .document("Data")
     override suspend fun getWidget(): Flow<Resource<List<WidgetRobot>>> = flow addSnapshotListener@{

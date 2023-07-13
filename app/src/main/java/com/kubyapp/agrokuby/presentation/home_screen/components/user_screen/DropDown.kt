@@ -125,7 +125,7 @@ fun DropDown(
                     modifier = Modifier.padding(vertical = 8.dp)
                 )
                 DropdownMenuItem(
-                    onClick = {navController.navigate(Screens.SplashScreen.route) },
+                    onClick = {navController.navigate(Screens.SignInScreen.route)},
                     modifier = Modifier.padding(vertical = 0.dp)
                 ) {
                     Row() {

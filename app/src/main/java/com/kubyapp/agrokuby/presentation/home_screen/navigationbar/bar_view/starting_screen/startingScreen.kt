@@ -1,7 +1,6 @@
 package com.kubyapp.agrokuby.presentation.home_screen.navigationbar.bar_view.starting_screen
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -23,15 +22,14 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.kubyapp.agrokuby.presentation.home_screen.HomeViewModel
 import com.kubyapp.agrokuby.presentation.home_screen.components.BarometricData.BarometricDataHolder
 import com.kubyapp.agrokuby.presentation.home_screen.components.BarometricData.BarometricViewModel
-import com.kubyapp.agrokuby.presentation.home_screen.components.MositureDataHolder
+import com.kubyapp.agrokuby.presentation.home_screen.components.Soil_screen.MositureDataHolder
 import com.kubyapp.agrokuby.presentation.home_screen.components.Robot_screen.SensSwitch
 import com.kubyapp.agrokuby.presentation.home_screen.components.StatusRobot
 import com.kubyapp.agrokuby.presentation.home_screen.components.TempDataHolder
 import com.kubyapp.agrokuby.presentation.home_screen.components.lightness_screen.LightnessDataHolder
 import com.kubyapp.agrokuby.presentation.home_screen.components.lightness_screen.LightnessViewModel
-import com.kubyapp.agrokuby.presentation.home_screen.components.temperature_screen.TemperatureViewModel
+import com.kubyapp.agrokuby.presentation.home_screen.components.Soil_screen.TemperatureViewModel
 import com.kubyapp.agrokuby.presentation.home_screen.components.user_screen.UserViewModel
-import com.kubyapp.domain.repository.StatusRobot
 
 
 @Composable
@@ -49,15 +47,16 @@ fun startingScreen(
     userData: UserViewModel = hiltViewModel(),
     barometricViewModel: BarometricViewModel = hiltViewModel(),
     navController: NavHostController
+
+
 ){
     // Crear estados para almacenar los datos obtenidos de Firebase
     val lightnessState by lightnessViewModel.getLightness.collectAsState()
     val batteryState by viewModel.getRobotStatus.collectAsState()
     val widgetRobotState by viewModel.getWidgetRobot.collectAsState()
     val soilState by temperatureViewModel.getTemperatureState.collectAsState()
-    val userState by userData.UserStatus.collectAsState()
     val barometricState by barometricViewModel.getBarometricState.collectAsState()
-    var expanded by remember { mutableStateOf(false) }
+    var expanded by remember { mutableStateOf(true) }
 
     Column(
         modifier = Modifier

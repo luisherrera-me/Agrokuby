@@ -44,15 +44,17 @@ import kotlinx.coroutines.delay
 @Composable
 fun SensSwitch(
     Widget: WidgetRobot?,
-    width: Dp = 52.dp,
+    width: Dp = 55.dp,
     height: Dp = 30.dp,
     checkedTrackColor: Color = Color(0xFF35898F),
     uncheckedTrackColor: Color = Color(0xFF9B9B9B),
-    gapBetweenThumbAndTrackEdge: Dp = 4.dp,
+    uncheckedGapBetweenThumbAndTrackEdge: Dp = 4.dp,
+    checkedGapBetweenThumbAndTrackEdge: Dp = 8.dp,
     borderWidth: Dp = 4.dp,
     cornerSize: Int = 50,
     iconInnerPadding: Dp = 4.dp,
-    thumbSize: Dp = 24.dp
+    checkedThumbSize: Dp = 26.dp,
+    uncheckedThumbSize: Dp = 19.dp
 ) {
 
     var isPressed by remember { mutableStateOf(false) }
@@ -66,137 +68,277 @@ fun SensSwitch(
 
     Spacer(modifier = Modifier.width(26.dp))
 
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight()
-            .height(80.dp)
-            .clickable {}
-            .padding(horizontal = 10.dp, vertical = 10.dp)
-            .scale(if (isPressed) 0.996f else 1f)//Escala
-            .alpha(if (isPressed) 0.98f else 1f),//Opacidad
-        elevation = if (isPressed) 0.dp else 5.dp, //Modificación de la elevación
-        backgroundColor = Color.White,
-        onClick = { isPressed = true },
-        shape = RoundedCornerShape(20.dp)
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 10.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Row(
-                modifier = Modifier
-                    .padding(horizontal = 0.dp),
-                horizontalArrangement = Arrangement.End,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                IconButton(onClick = { /* acción */ }) {
-                    val batteryPercentage = Widget?.Lightning
-                    val batteryColor = gray200
 
-                    Box(
+    Row(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 10.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Box(modifier = Modifier.weight(1f)) {
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+                    .height(80.dp)
+                    .width(200.dp)
+                    .clickable {}
+                    .padding(horizontal = 10.dp, vertical = 10.dp)
+                    .scale(if (isPressed) 0.996f else 1f)//Escala
+                    .alpha(if (isPressed) 0.98f else 1f),//Opacidad
+                elevation = if (isPressed) 0.dp else 5.dp, //Modificación de la elevación
+                backgroundColor = Color.White,
+                onClick = { isPressed = true },
+                shape = RoundedCornerShape(20.dp)
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 10.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Row(
                         modifier = Modifier
-                            .size(52.dp)
-                            .size(40.dp)
-                            .size(width = 10.dp, height = 25.dp)
-                            .background(batteryColor, CircleShape),
-                        contentAlignment = Alignment.Center
+                            .padding(horizontal = 0.dp),
+                        horizontalArrangement = Arrangement.End,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Image(
-                            imageVector = ImageVector.vectorResource(id = R.drawable.ic_bulb),
-                            contentDescription = "Battery Icon",
-                            modifier = Modifier.size(35.dp)
-                        )
+                        IconButton(onClick = { /* acción */ }) {
+                            val batteryPercentage = Widget?.Lightning
+                            val batteryColor = gray200
+
+                            Box(
+                                modifier = Modifier
+                                    .size(52.dp)
+                                    .size(40.dp)
+                                    .size(width = 10.dp, height = 25.dp)
+                                    .background(batteryColor, CircleShape),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Image(
+                                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_bulb),
+                                    contentDescription = "Battery Icon",
+                                    modifier = Modifier.size(35.dp)
+                                )
+                            }
+                        }
+                        Spacer(modifier = Modifier.width(0.dp))
+                        /*Column {
+                            Text(
+                                text = "lux",
+                                style = TextStyle(
+                                    fontSize = 16.sp,
+                                    fontWeight = FontWeight.Bold
+                                ),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        }*/
+                    }
+
+                    // state of the switch
+                    var switchOn by remember {
+                        mutableStateOf(Widget?.Lightning)
+                    }
+                    // for moving the thumb
+                    val alignment by animateAlignmentAsState(if (switchOn == true) 1f else -1f)
+
+                    Row(
+                        horizontalArrangement = Arrangement.End,
+                        verticalAlignment = Alignment.Bottom
+                    ) {
+                        Column {
+                            Text(
+                                modifier = Modifier.align(Alignment.CenterHorizontally),
+                                text = "State",
+                                style = TextStyle(
+                                    fontSize = 14.sp,
+                                    fontWeight = FontWeight.Medium
+                                ),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+
+                            Spacer(modifier = Modifier.height(5.dp))
+                            Box(
+                                modifier = Modifier
+                                    .size(width = width, height = height)
+                                    .border(
+                                        width = borderWidth,
+                                        color = if (switchOn == true) checkedTrackColor else uncheckedTrackColor,
+                                        shape = RoundedCornerShape(percent = cornerSize)
+                                    )
+                                    .clickable(
+                                        indication = null,
+                                        interactionSource = interactionSource
+                                    ) {
+                                        switchOn = !switchOn!!
+                                    },
+                                contentAlignment = Alignment.Center
+                            ) {
+
+                                // this is to add padding at the each horizontal side
+                                Box(
+                                    modifier = Modifier
+                                        .padding(
+                                            start = if (switchOn == true) uncheckedGapBetweenThumbAndTrackEdge else checkedGapBetweenThumbAndTrackEdge,
+                                            end = if (switchOn == true) uncheckedGapBetweenThumbAndTrackEdge else checkedGapBetweenThumbAndTrackEdge
+                                        )
+                                        .fillMaxSize(),
+                                    contentAlignment = alignment
+                                ) {
+
+                                    // thumb with icon
+                                    Icon(
+                                        imageVector = if (switchOn == true) Icons.Filled.Done else Icons.Filled.Close,
+                                        contentDescription = if (switchOn == true) "Enabled" else "Disabled",
+                                        modifier = Modifier
+                                            .size(size = if (switchOn == true) checkedThumbSize else uncheckedThumbSize)
+                                            .background(
+                                                color = if (switchOn == true) checkedTrackColor else uncheckedTrackColor,
+                                                shape = CircleShape
+                                            )
+                                            .padding(all = iconInnerPadding),
+                                        tint = Color.White
+                                    )
+                                }
+                            }
+                        }
                     }
                 }
-                Spacer(modifier = Modifier.width(16.dp))
-                Column {
-                    Text(
-                        text = "Lightning",
-                        style = TextStyle(
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Bold
-                        ),
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                }
             }
-            Row(
-                horizontalArrangement = Arrangement.End,
-                verticalAlignment = Alignment.CenterVertically
+        }
+        Box(modifier = Modifier.weight(1f)) {
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+                    .height(80.dp)
+                    .width(200.dp)
+                    .clickable {}
+                    .padding(horizontal = 10.dp, vertical = 10.dp)
+                    .scale(if (isPressed) 0.996f else 1f)//Escala
+                    .alpha(if (isPressed) 0.98f else 1f),//Opacidad
+                elevation = if (isPressed) 0.dp else 5.dp, //Modificación de la elevación
+                backgroundColor = Color.White,
+                onClick = { isPressed = true },
+                shape = RoundedCornerShape(20.dp)
             ) {
-                Column {
-                    Text(
-                        modifier = Modifier.align(Alignment.CenterHorizontally),
-                        text = "State",
-                        style = TextStyle(
-                            fontSize = 14.sp,
-                            fontWeight = FontWeight.Normal
-                        ),
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                }
-            }
-
-            // state of the switch
-            var switchOn by remember {
-                mutableStateOf(Widget?.Lightning)
-            }
-            // for moving the thumb
-            val alignment by animateAlignmentAsState(if (switchOn == true) 1f else -1f)
-
-            Row(
-                horizontalArrangement = Arrangement.End,
-                verticalAlignment = Alignment.Bottom
-            ) {
-                Column {
-                    Spacer(modifier = Modifier.height(5.dp))
-                    Box(
+                Row(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 10.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Row(
                         modifier = Modifier
-                            .size(width = width, height = height)
-                            .border(
-                                width = borderWidth,
-                                color = if (switchOn == true) checkedTrackColor else uncheckedTrackColor,
-                                shape = RoundedCornerShape(percent = cornerSize)
-                            )
-                            .clickable(
-                                indication = null,
-                                interactionSource = interactionSource
-                            ) {
-                                switchOn = !switchOn!!
-                            },
-                        contentAlignment = Alignment.Center
+                            .padding(horizontal = 0.dp),
+                        horizontalArrangement = Arrangement.End,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
+                        IconButton(onClick = { /* acción */ }) {
+                            val batteryPercentage = Widget?.Lightning
+                            val batteryColor = gray200
 
-                        // this is to add padding at the each horizontal side
-                        Box(
-                            modifier = Modifier
-                                .padding(
-                                    start = gapBetweenThumbAndTrackEdge,
-                                    end = gapBetweenThumbAndTrackEdge
-                                )
-                                .fillMaxSize(),
-                            contentAlignment = alignment
-                        ) {
-
-                            // thumb with icon
-                            Icon(
-                                imageVector = if (switchOn == true) Icons.Filled.Done else Icons.Filled.Close,
-                                contentDescription = if (switchOn == true) "Enabled" else "Disabled",
+                            Box(
                                 modifier = Modifier
-                                    .size(size = thumbSize)
-                                    .background(
-                                        color = if (switchOn == true) checkedTrackColor else uncheckedTrackColor,
-                                        shape = CircleShape
-                                    )
-                                    .padding(all = iconInnerPadding),
-                                tint = Color.White
+                                    .size(52.dp)
+                                    .size(40.dp)
+                                    .size(width = 70.dp, height = 25.dp)
+                                    .background(gray200, CircleShape),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Image(
+                                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_load),
+                                    contentDescription = "Battery Icon",
+                                    modifier = Modifier.size(35.dp)
+                                )
+                            }
+                        }
+                        Spacer(modifier = Modifier.width(0.dp))
+                        /*Column {
+                            Text(
+                                text = "",
+                                style = TextStyle(
+                                    fontSize = 16.sp,
+                                    fontWeight = FontWeight.Bold
+                                ),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
                             )
+                        }
+                         */
+                    }
+
+
+                    // state of the switch
+                    var switchOn by remember {
+                        mutableStateOf(Widget?.SensBMP390)
+                    }
+                    // for moving the thumb
+                    val alignment by animateAlignmentAsState(if (switchOn == true) 1f else -1f)
+                    Row(
+                        horizontalArrangement = Arrangement.End,
+                        verticalAlignment = Alignment.Bottom
+                    ) {
+                        Column {
+                            Text(
+                                modifier = Modifier.align(Alignment.CenterHorizontally),
+                                text = "State",
+                                style = TextStyle(
+                                    fontSize = 14.sp,
+                                    fontWeight = FontWeight.Medium
+                                ),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                            Spacer(modifier = Modifier.height(5.dp))
+                            Box(
+                                modifier = Modifier
+                                    .size(width = width, height = height)
+                                    .border(
+                                        width = borderWidth,
+                                        color = if (switchOn == true) checkedTrackColor else uncheckedTrackColor,
+                                        shape = RoundedCornerShape(percent = cornerSize)
+                                    )
+                                    .clickable(
+                                        indication = null,
+                                        interactionSource = interactionSource
+                                    ) {
+                                        switchOn = !switchOn!!
+                                    },
+                                contentAlignment = Alignment.Center
+                            ) {
+
+                                // this is to add padding at the each horizontal side
+                                Box(
+                                    modifier = Modifier
+                                        .padding(
+                                            start = if (switchOn == true) uncheckedGapBetweenThumbAndTrackEdge else checkedGapBetweenThumbAndTrackEdge,
+                                            end = if (switchOn == true) uncheckedGapBetweenThumbAndTrackEdge else checkedGapBetweenThumbAndTrackEdge
+                                        )
+                                        .fillMaxSize(),
+                                    contentAlignment = alignment
+                                ) {
+
+                                    // thumb with icon
+                                    Icon(
+                                        imageVector = if (switchOn == true) Icons.Filled.Done else Icons.Filled.Close,
+                                        contentDescription = if (switchOn == true) "Enabled" else "Disabled",
+                                        modifier = Modifier
+                                            .size(size = if (switchOn == true) checkedThumbSize else uncheckedThumbSize)
+                                            .background(
+                                                color = if (switchOn == true) checkedTrackColor else uncheckedTrackColor,
+                                                shape = CircleShape
+                                            )
+                                            .padding(all = iconInnerPadding),
+                                        tint = Color.White
+                                    )
+                                }
+                            }
                         }
                     }
                 }
@@ -204,142 +346,11 @@ fun SensSwitch(
         }
     }
 
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight()
-            .height(80.dp)
-            .clickable {}
-            .padding(horizontal = 10.dp, vertical = 10.dp)
-            .scale(if (isPressed) 0.996f else 1f)//Escala
-            .alpha(if (isPressed) 0.98f else 1f),//Opacidad
-        elevation = if (isPressed) 0.dp else 5.dp, //Modificación de la elevación
-        backgroundColor = Color.White,
-        onClick = { isPressed = true },
-        shape = RoundedCornerShape(20.dp)
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 10.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Row(
-                modifier = Modifier
-                    .padding(horizontal = 0.dp),
-                horizontalArrangement = Arrangement.End,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                IconButton(onClick = { /* acción */ }) {
-                    val batteryPercentage = Widget?.Lightning
-                    val batteryColor = gray200
 
-                    Box(
-                        modifier = Modifier
-                            .size(52.dp)
-                            .size(40.dp)
-                            .size(width = 70.dp, height = 25.dp)
-                            .background(gray200, CircleShape),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Image(
-                            imageVector = ImageVector.vectorResource(id = R.drawable.ic_load),
-                            contentDescription = "Battery Icon",
-                            modifier = Modifier.size(35.dp)
-                        )
-                    }
-                }
-                Spacer(modifier = Modifier.width(16.dp))
-                Column {
-                    Text(
-                        text = "barometric data",
-                        style = TextStyle(
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Bold
-                        ),
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                }
-            }
-            Row(
-                horizontalArrangement = Arrangement.End,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Column {
-                    Text(
-                        modifier = Modifier.align(Alignment.CenterHorizontally),
-                        text = "State",
-                        style = TextStyle(
-                            fontSize = 14.sp,
-                            fontWeight = FontWeight.Normal
-                        ),
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                }
-            }
 
-            // state of the switch
-            var switchOn by remember {
-                mutableStateOf(Widget?.SensBMP390)
-            }
-            // for moving the thumb
-            val alignment by animateAlignmentAsState(if (switchOn == true) 1f else -1f)
-            Row(
-                horizontalArrangement = Arrangement.End,
-                verticalAlignment = Alignment.Bottom
-            ) {
-                Column {
-                    Spacer(modifier = Modifier.height(5.dp))
-                    Box(
-                        modifier = Modifier
-                            .size(width = width, height = height)
-                            .border(
-                                width = borderWidth,
-                                color = if (switchOn == true) checkedTrackColor else uncheckedTrackColor,
-                                shape = RoundedCornerShape(percent = cornerSize)
-                            )
-                            .clickable(
-                                indication = null,
-                                interactionSource = interactionSource
-                            ) {
-                                switchOn = !switchOn!!
-                            },
-                        contentAlignment = Alignment.Center
-                    ) {
 
-                        // this is to add padding at the each horizontal side
-                        Box(
-                            modifier = Modifier
-                                .padding(
-                                    start = gapBetweenThumbAndTrackEdge,
-                                    end = gapBetweenThumbAndTrackEdge
-                                )
-                                .fillMaxSize(),
-                            contentAlignment = alignment
-                        ) {
 
-                            // thumb with icon
-                            Icon(
-                                imageVector = if (switchOn == true) Icons.Filled.Done else Icons.Filled.Close,
-                                contentDescription = if (switchOn == true) "Enabled" else "Disabled",
-                                modifier = Modifier
-                                    .size(size = thumbSize)
-                                    .background(
-                                        color = if (switchOn == true) checkedTrackColor else uncheckedTrackColor,
-                                        shape = CircleShape
-                                    )
-                                    .padding(all = iconInnerPadding),
-                                tint = Color.White
-                            )
-                        }
-                    }
-                }
-            }
-        }
-    }
+
 
 
     // gap between switch and the text

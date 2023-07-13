@@ -1,7 +1,8 @@
 package com.kubyapp.agrokuby.data.model.sensors
 
 data class Barometric (
-    val altitud : Int = 0,
-    val presion : Int = 0,
-    val temperatura: Int = 0
+    val Altitude : Int = 0,
+    val Pressure : Int = 0,
+    val Temperature: Int = 0,
+    val date: String = ""
         )
